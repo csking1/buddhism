@@ -1,6 +1,6 @@
 # Finding Buddhism
 
-## All of these steps are performed by finding_buddhism.c, but they're explained sequentially here by the files that are used.
+### All of these steps are performed by finding_buddhism.c, but they're explained sequentially here by the files that are used.
 
 1. read.c: get the training quotes and labels from Data/training.csv
 
