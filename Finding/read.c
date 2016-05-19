@@ -5,29 +5,41 @@
 int main(){
    FILE *fp;
    char line[300];
+   int sentences[152]; /* This is the size of the training set*/
+   int count = 0;
+   int labels[152];
 
-   /* opening file for reading */
    fp = fopen("Data/training.txt" , "r");
    if(fp == NULL)
    {
       perror("Error opening file");
       return(-1);
    }
-   while (fgets(line, sizeof(line), fp)){
+   
+   while (fgets(line, 300, fp)){
 
-      int s = sizeof(line) - 10;
-      for(int i = 0; i < s; i++){
-         char val = line[i];
-         printf("%c",  val);
-         // if (val == '1' || val == '0'){
-         //    printf("%s\n", val);
-         // }
+      int s = strlen((line)) - 1;
+      printf("%d\n", s);
+
+      char quote[s];
+      for(int i = 0; i <= s; i++){
+         quote[i] = line[i];
       }
-      printf("\nvalue = %d\n", atoi(&line[strlen(line) - 1]));
 
+      char label =  atoi(&line[s]);
 
+      sentences[count] = quote;
+      labels[count] = label;
+      count ++;
 
+   }
 
+   for (int i = 0; i < 152; i++){
+      printf("%s\n", &sentences[i]);
+   }
+
+   for (int i = 0; i < 152; i++){
+      printf("%s\n", &labels[i]);
    }
 
    fclose(fp);
