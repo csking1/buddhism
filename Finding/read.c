@@ -2,10 +2,9 @@
 
 #include <stdio.h>
 
-int main()
-{
+int main(){
    FILE *fp;
-   char str[600];
+   char line[256];
 
    /* opening file for reading */
    fp = fopen("Data/training.txt" , "r");
@@ -14,13 +13,24 @@ int main()
       perror("Error opening file");
       return(-1);
    }
-   if( fgets (str, 600, fp)!=NULL )
-   {
-      /* writing content to stdout */
-      puts(str);
+   while (fgets(line, sizeof(line), fp)){
+
+      int s = sizeof(line) - 10;
+      for(int i = 0; i < s; i++){
+         char val = line[i];
+         printf("%c",  val);
+         // if (val == '1' || val == '0'){
+         //    printf("%s\n", val);
+         // }
+      }
+      printf("value = %d\n", atoi(&line[strlen(line) - 1]));
+
+
+
+
    }
+
    fclose(fp);
 
    return(0);
 }
-
