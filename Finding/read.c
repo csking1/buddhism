@@ -4,7 +4,7 @@
 
 int main(){
    FILE *fp;
-   char line[256];
+   char line[300];
 
    /* opening file for reading */
    fp = fopen("Data/training.txt" , "r");
@@ -23,7 +23,7 @@ int main(){
          //    printf("%s\n", val);
          // }
       }
-      printf("value = %d\n", atoi(&line[strlen(line) - 1]));
+      printf("\nvalue = %d\n", atoi(&line[strlen(line) - 1]));
 
 
 
