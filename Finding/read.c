@@ -5,7 +5,7 @@
 int main(){
    FILE *fp;
    char line[300];
-   int sentences[152]; /* This is the size of the training set*/
+   int sentences[152]; /* 152 = the size of the training set*/
    int count = 0;
    int labels[152];
 
@@ -28,8 +28,8 @@ int main(){
 
       char label =  atoi(&line[s]);
 
-      sentences[count] = quote;
-      labels[count] = label;
+      sentences[count] = &quote;
+      labels[count] = &label;
       count ++;
 
    }
