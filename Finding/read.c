@@ -1,5 +1,7 @@
 // get quotes and labels from text file
 
+// also count and return the number of unigrams and bigrams
+
 #include <stdio.h>
 
 int main(){
@@ -15,7 +17,7 @@ int main(){
       perror("Error opening file");
       return(-1);
    }
-   
+
    while (fgets(line, 300, fp)){
 
       int s = strlen((line)) - 1;

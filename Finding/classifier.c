@@ -14,6 +14,7 @@ int get_grams(list){
 	// do stemming, cat = cats, sit = sits
 }
 
+// create the hashmap
 int get_counts_dict(){
 	int count = 0;
 	// counts = "all_bigrams":{0:count, 1:count}

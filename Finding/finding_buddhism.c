@@ -1,6 +1,6 @@
-// read in list of quotes and vector of labels from read.c
+// read in list of quotes and vector of labels from read.c. This function takes the size of the training set.
 
-// initialize classifier with N
+// initialize classifier with N: create the hash table. This function takes the total number of unigrams and bigrams to calculate the starting size of the hash table.
 
 // hand off list of quotes and vector to classifier for training
 
