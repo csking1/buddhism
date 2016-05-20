@@ -24,10 +24,13 @@ int main(){
       printf("%d\n", s);
 
       char quote[s];
+
+      // copy the line into an arra
       for(int i = 0; i <= s; i++){
          quote[i] = line[i];
       }
 
+      // get the integer at the end of the string
       char label =  atoi(&line[s]);
 
       sentences[count] = &quote;
