@@ -3,11 +3,12 @@
 // also count and return the number of unigrams and bigrams
 
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <string.h>
 int main(){
    FILE *fp;
    char line[300];
-   int sentences[152]; /* 152 = the size of the training set*/
+   char* sentences[152]; /* 152 = the size of the training set*/
    int count = 0;
    int labels[152];
 
@@ -20,8 +21,8 @@ int main(){
 
    while (fgets(line, 300, fp)){
 
-      int s = strlen((line)) - 1;
-      printf("%d\n", s);
+      int s = strlen((line)) - 3;
+      // printf("%d\n", s);
 
       char quote[s];
 
@@ -30,24 +31,26 @@ int main(){
          quote[i] = line[i];
       }
 
+
       // get the integer at the end of the string
       char label =  atoi(&line[s]);
+      printf("%d\n", label);
 
-      sentences[count] = &quote;
-      labels[count] = &label;
+      sentences[count] = quote;
+      labels[count] = label;
       count ++;
 
    }
 
-   for (int i = 0; i < 152; i++){
-      printf("%s\n", &sentences[i]);
-   }
+   // for (int i = 0; i < 152; i++){
+   //    printf("%s\n", sentences[i]);
+   // }
 
-   for (int i = 0; i < 152; i++){
-      printf("%s\n", &labels[i]);
-   }
+   // for (int i = 0; i < 152; i++){
+   //    printf("%d\n", labels[i]);
+   // }
 
-   fclose(fp);
+   // fclose(fp);
 
    return(0);
 }
