@@ -2,7 +2,7 @@
 
 All of these steps are performed by finding_buddhism.c, but they're explained sequentially here by the files that are used.
 
-1. read.c: get the training quotes and labels from Data/training.txt
+1. read.c: get the training quotes and labels from Data/training.txt. This results in a 2-D array of quotes and a 1-D array of integers that correspond to the quotes.
 
 2. classifier.c: initialize the naieve bayes classifier with the number of quotes, feed the training quotes into the classifier and calculate frequencies
 
