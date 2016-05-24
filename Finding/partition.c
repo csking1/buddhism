@@ -1,1 +1,1 @@
-partition.c
+// reads through gutenberg data set and randomly assigns each quote to a node
