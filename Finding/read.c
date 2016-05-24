@@ -31,10 +31,9 @@ int main(){
          quote[i] = line[i];
       }
 
-
       // get the integer at the end of the string
       char label =  atoi(&line[s]);
-      printf("%d\n", label);
+      printf("%s\n", quote);
 
       sentences[count] = quote;
       labels[count] = label;
@@ -42,15 +41,7 @@ int main(){
 
    }
 
-   // for (int i = 0; i < 152; i++){
-   //    printf("%s\n", sentences[i]);
-   // }
-
-   // for (int i = 0; i < 152; i++){
-   //    printf("%d\n", labels[i]);
-   // }
-
-   // fclose(fp);
+   fclose(fp);
 
    return(0);
 }
