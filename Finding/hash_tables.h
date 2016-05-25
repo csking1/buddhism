@@ -19,9 +19,7 @@ int add_string(hash_table *hashtable, char *str);
 
 void free_table(hash_table *hashtable);
 
-
 // function for rehash
-
 
 /* ---------------------- classifier functions ------------------------------
 
