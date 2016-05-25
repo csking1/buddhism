@@ -12,7 +12,7 @@ hash_table *create_hash_table(int size){
   }
 
   // sparknotes has sizeof(hash_value_t), but I don't know what that refers to
-  
+
   if ((new = malloc(sizeof(new))) == NULL){
     return NULL;
   }

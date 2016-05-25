@@ -5,7 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-int main(){
+
+// create a struct for read
+
+// read will return the struct
+
+int read(){
    FILE *fp;
    char line[300]; /* 300 is an arbitrary length to read in lines from the text file*/
    char* sentences[152]; /* 152 = the size of the training set*/

@@ -23,7 +23,7 @@ void free_table(hash_table *hashtable);
 // function for rehash
 
 
-/* ---------------------- classifier functions ------------------------------ 
+/* ---------------------- classifier functions ------------------------------
 
 change add string to add grams, which will also add counts
 
