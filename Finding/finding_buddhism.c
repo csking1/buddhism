@@ -1,8 +1,8 @@
 // read in list of quotes and vector of labels from read.c. This function takes the size of the training set.
 
-// initialize classifier with N: create the hash table. This function takes the total number of unigrams and bigrams to calculate the starting size of the hash table.
+// initialize classifier with N: create the hash table. This function takes the size of the training set**2 for the starting number of buckets in the linked list
 
-// hand off list of quotes and vector to classifier for training
+// hand off quotes to classifier for training
 
 // get gutenberg splits from partition.c
 
