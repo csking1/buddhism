@@ -1,1 +1,3 @@
-read.o: read.c
+read.o: read.c read.h
+
+read.h:

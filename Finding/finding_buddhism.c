@@ -2,7 +2,6 @@
 #include "TestScripts/hash_tables.h"
 #include "read.h"
 
-
 // read in list of quotes and vector of labels from read.c. This function takes the size of the training set.
 
 // initialize classifier with N: create the hash table. This function takes the size of the training set**2 for the starting number of buckets in the linked list
@@ -17,10 +16,7 @@
 
 // merge results and print top 10,000 quotes to Output/results.csv
 
-
 int main(){
 	printf("hey there\n");
-	// this will be the struct coming back from read
-	train = read();
 	return 0;
 }
