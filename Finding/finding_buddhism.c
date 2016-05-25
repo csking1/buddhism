@@ -1,22 +1,20 @@
 #include <stdio.h>
 #include "TestScripts/hash_tables.h"
-#include "read.h"
-
-// read in list of quotes and vector of labels from read.c. This function takes the size of the training set.
-
-// initialize classifier with N: create the hash table. This function takes the size of the training set**2 for the starting number of buckets in the linked list
-
-// hand off quotes to classifier for training
-
-// get gutenberg splits from partition.c
-
-// feed splits and copies of classifier into nodes with concurrency.c
-
-// score each quote in the node with classifier.c
-
-// merge results and print top 10,000 quotes to Output/results.csv
+// #include "read.h"
 
 int main(){
 	printf("hey there\n");
+	// get the training set from read.c
+
+	// get the hash table
+
+	// hand off the quotes to the hash table, which calculates the probabilities as well
+
+	// turn on the threads
+		// each thread takes a copy of the classifier 
+		// reads in from the randomly-sorted gutenberg files
+		// returns the top nodes/10000 quotes
+
+	// write to csv
 	return 0;
 }

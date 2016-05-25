@@ -5,13 +5,12 @@ else
 endif
 
 
-OBJS = read.o \
-       finding_buddhism.o \
-       TestScripts/hash_tables.o
+OBJS = finding_buddhism.o 
+
 DEPS = $(OBJS:.o=.d)
 CC = clang
 CFLAGS = -std=c99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
-LDLIBS = -lpthread
+LDLIBS = -lpthread 
 BIN = find
 
 all: find
