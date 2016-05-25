@@ -5,7 +5,9 @@ else
 endif
 
 
-OBJS = finding_buddhism.o 
+OBJS = finding_buddhism.o \
+		hash_tables.o \
+		read.o 
 
 DEPS = $(OBJS:.o=.d)
 CC = clang

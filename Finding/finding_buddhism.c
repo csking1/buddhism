@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "TestScripts/hash_tables.h"
-// #include "read.h"
+#include "hash_tables.h"
+#include "read.h"
 
 int main(){
 	printf("hey there\n");
