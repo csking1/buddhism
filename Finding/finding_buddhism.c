@@ -6,7 +6,7 @@
 int main(){
 
 	train* quotes = get_train_set();
-	//print_quotes(quotes);
+	print_quotes(quotes);
 	
 	//free(quotes);  // This causes a crash. Try to put it back in later
 

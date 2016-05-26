@@ -26,17 +26,13 @@ train* get_train_set(){
       count ++;
    }
 
-   for (int i=0; i<152; i++){
-      printf("%s\n", new-> sentences[i]);
-   }
-
    //fclose(fp);
    return new;
 }
 
 void* print_quotes(train* quotes){
-   for (int i=0; i<152;i++){
-      printf("%s\n", quotes->sentences[i]);
+   for (int i=0; i<152; i++){
+      printf("%s\n", quotes-> sentences[i]);
    }
    return NULL;
 }
