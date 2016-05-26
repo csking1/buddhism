@@ -11,7 +11,7 @@ typedef struct hash_map {
   links **table; /*the table elements */
 } hash_table;
 
-hash_table *create_hash_table(int size);
+hash_table* create_hash_table(int size);
 
 links *lookup_string(hash_table *hashtable, char *str);
 

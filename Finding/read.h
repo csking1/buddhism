@@ -10,4 +10,6 @@ typedef struct trainset {
 
 train* get_train_set();
 
+void* print_quotes(train* quotes);
+
 #endif /* READ_H*/

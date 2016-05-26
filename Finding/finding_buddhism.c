@@ -1,12 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "hash_tables.h"
 #include "read.h"
 
 int main(){
-	printf("hey there\n");
-	// get the training set from read.c
 
-	// get the hash table
+	train* quotes = get_train_set();
+	//print_quotes(quotes);
+	
+	//free(quotes);  // This causes a crash. Try to put it back in later
+
+	// hash_table table = create_hash_table(152);
 
 	// hand off the quotes to the hash table, which calculates the probabilities as well
 

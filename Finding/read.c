@@ -16,15 +16,27 @@ train* get_train_set(){
    }
    while (fgets(line, 300, fp)){
       int s = strlen((line)) - 3;
-      char quote[s];
+      char* quote = (char*)malloc(sizeof(char) * s);
       for(int i = 0; i <= s; i++){
          quote[i] = line[i];
       }
       int label =  atoi(&line[s]);
-      new -> sentences[count] = quote;
-      new -> labels[count] = label;
+      new->sentences[count] = quote;
+      new->labels[count] = label;
       count ++;
    }
-   fclose(fp);
+
+   for (int i=0; i<152; i++){
+      printf("%s\n", new-> sentences[i]);
+   }
+
+   //fclose(fp);
    return new;
+}
+
+void* print_quotes(train* quotes){
+   for (int i=0; i<152;i++){
+      printf("%s\n", quotes->sentences[i]);
+   }
+   return NULL;
 }
