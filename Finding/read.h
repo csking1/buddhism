@@ -5,7 +5,7 @@
 
 typedef struct trainset {
 	char* sentences[152]; /* 152 is the size of the training set*/
-	char* labels[152];
+	int labels[152];
 } train;
 
 train* get_train_set();

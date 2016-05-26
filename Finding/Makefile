@@ -7,15 +7,14 @@ endif
 
 OBJS = finding_buddhism.o \
 		hash_tables.o \
-		read.o 
-
+		read.o
 DEPS = $(OBJS:.o=.d)
 CC = clang
 CFLAGS = -std=c99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
 LDLIBS = -lpthread 
-BIN = find
+BIN = buddhism
 
-all: find
+all: buddhism
 
 $(BIN): $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $(BIN) $(LDLIBS)
