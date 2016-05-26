@@ -1,89 +1,57 @@
-/*
-counts =  {unigram : {0: count, 1:count},
-		unigram: {0: count, 1:count},
-		unigram: {0: count, 1:count}},
-		bigram: {0: count, 1:count},
-		bigram: {0: count, 1:count},
-		all_unigrams: {0: count, 1: count},
-		all_bigrams: {0: count, 1: count},
-*/
+#include <stdlib.h>
+#include <stdio.h>
+#include "classifier.h"
+#include "hash_tables.h"
+#include "read.h"
 
-int get_grams(list){
-	// takes a sentence and returns a list of unigrams / bigrams
-	// remove punctuation
-	// do stemming, cat = cats, sit = sits
+char* get_grams(char* sentences){
+	return "this isn't the actual answer";
 }
 
-// create the hashmap
-int get_counts_dict(){
-	int count = 0;
-	// counts = "all_bigrams":{0:count, 1:count}
-	// return counts
+float class_probability(classifier* clf){
+	// P(1) : number of postive quotes / length(Y)
+	return 0.0;
 }
 
-int get_stopwords(){
-	// read in from text file
-	// add to dictionary
-	// return a dictionary
+classifier* classifier_init(train* quotes, hash_table* hash_table){
+	classifier* clf = (classifier*)malloc(sizeof(classifier));
+	clf-> class_prob = class_probability(clf);
+
+
+	/* 152 is the size of the training set*/
+	for (int i = 0; i<152; i++){
+		//int l = quotes->labels[i];
+		//char* grams = get_grams(quotes->sentences[i]);
+		// walk through grams, add to hash table
+		// increment unigrams and bigrams
+	}
+
+	return clf;
 }
 
-int is_not_stopword(gram, stops){
-	// hash the gram
-	// return 1 if not in stops, 0 otherwise
-}
+void calculate_probabilities(classifier* clf){
+	/* walk through the hash map and calculate probabilities
+  			{gram: gram_prob, prob_gram_positive}
 
-void* add_grams_to_dictionary(counts, grams, stops, labels){
-	// for each in grams
-		// if is_not_stopword(gram, stops)
-			// hash the gram
-			// get the label
-			// drop into dictionary, into label, increment the count
-			// increment count for all_unigrams or all_bigrams
-}
-
-int turn_into_probabilities(counts){
-	// Walk through counting dictionary and turn it into probabilities dictionary
-
-	/*  probs = { P(1) : number of postive quotes / length(Y),
 			P(unigram) :  0 count + 1 count / all_unigrams,
 			P(bigram) : 0 count + 1 count / all_bigrams,
 			P(unigram|1) : positive count for this unigram / all positive unigrams,
 			P(bigram|1) : positive count for this bigram / all positive bigrams}
 	*/
+	return;
 }
 
-int train(){
-	// stops = get_stopwords()
+float get_score(classifier* clf, char* fragment){
+	//char* grams = get_grams(fragment);
 
-	// counts = get_counts_dict()
-
-	// for each in sentences:
-		// grams = get_grams(each)
-		// add_grams_to_dictionary(counts, grams, stops, labels)
-
-	// turn_into_probabilities(counts)
-
-	// return dict
-}
-
-
-int score(dict, quote){
-	int score = 0
-	//grams = get_grams(quote)
 	// for g in grams:
-		// numerator = 1 + P(gram|1) * P(1)
+		// numerator = 1 + prob_gram_positive * class_prob
 
-		// denominator = 1 + P(gram)
+		// denominator = 1 + gram_prob
 
 		// score +=  numerator / denominator
 	// score = score / length(grams)
 
+	return 0.0;
 }
 
-
-void* struct classifier(dict){
-
-	// self.dict = dict
-	// self.score = score(dict, quote)
-
-};

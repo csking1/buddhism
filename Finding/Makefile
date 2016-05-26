@@ -7,7 +7,8 @@ endif
 
 OBJS = finding_buddhism.o \
 		hash_tables.o \
-		read.o
+		read.o \
+		classifier.o
 DEPS = $(OBJS:.o=.d)
 CC = clang
 CFLAGS = -std=c99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
