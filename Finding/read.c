@@ -3,8 +3,8 @@
 #include <string.h>
 #include "read.h"
 
-train* get_train_set(){
-   train* new = (train*)malloc(sizeof(train));
+TrainSet* get_train_set(){
+   TrainSet* t = (TrainSet*)malloc(sizeof(TrainSet));
    FILE *fp;
    char line[300]; /* 300 is an arbitrary length to read in lines from the text file*/
    int count = 0;
@@ -21,18 +21,17 @@ train* get_train_set(){
          quote[i] = line[i];
       }
       int label =  atoi(&line[s]);
-      new->sentences[count] = quote;
-      new->labels[count] = label;
+      t->sentences[count] = quote;
+      t->labels[count] = label;
       count ++;
    }
-
    //fclose(fp);
-   return new;
+   return t;
 }
 
-void* print_quotes(train* quotes){
+void* print_quotes(TrainSet* t){
    for (int i=0; i<152; i++){
-      printf("%s\n", quotes-> sentences[i]);
+      printf("%s\n", t-> sentences[i]);
    }
    return NULL;
 }

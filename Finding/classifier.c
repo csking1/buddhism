@@ -25,22 +25,24 @@ char* get_grams(char* sentences){
 	return "this is a string I swear";
 }
 
-float class_probability(classifier* clf){
-	// P(1) : number of postive quotes / length(Y)
-	// printf("%s\n", "executed class probability");
-	// int length = clf->dictionary->size;
-	// printf("%d\n", length);
-	return 0.0;
+float class_probability(Classifier* clf){
+	float count = 0;
+	int l = clf->dictionary->size;
+	for (int i = 0; i<l; i++){
+		int l = clf->train->labels[i];
+		if (l != 1){
+			count = count + 1.0;
+		}
+	}
+	return count/l;
 }
 
-classifier* classifier_init(train* quotes, hash_table* dictionary){
-	classifier* clf = (classifier*)malloc(sizeof(classifier));
-	clf->dictionary =  dictionary;
-	clf->quotes = quotes;
+Classifier* classifier_init(TrainSet* t, HashTable* h){
+	Classifier* clf = (Classifier*)malloc(sizeof(Classifier));
+	clf->dictionary =  h;
+	clf->train = t;
 
-
-
-	for (int i = 0; i<152; i++){
+	for (int i = 0; i<h->size; i++){
 		// printf("%s\n", clf->quotes[i]);
 		// get grams will return a linked list
 		// walk through the linked list
@@ -50,7 +52,7 @@ classifier* classifier_init(train* quotes, hash_table* dictionary){
 	return clf;
 }
 
-void calculate_probabilities(classifier* clf){
+void calculate_probabilities(Classifier* clf){
 	/* walk through the hash map and calculate probabilities
   			{gram: gram_prob, prob_gram_positive}
 
@@ -62,7 +64,7 @@ void calculate_probabilities(classifier* clf){
 	return;
 }
 
-float get_score(classifier* clf, char* fragment){
+float get_score(Classifier* clf, char* fragment){
 	//char* grams = get_grams(fragment);
 
 	// for g in grams:

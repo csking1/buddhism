@@ -9,22 +9,22 @@ typedef struct linked {
   int zero; /* running count of grams in class zero */
 } links;
 
-typedef struct hash_map {
+typedef struct HashTable {
   	int size;   /* size of the table */
   	links **table; /*the table elements */
 	int all_unigrams;
 	int all_bigrams;
 	int positive_unigrams;
 	int positive_bigrams;
-} hash_table;
+} HashTable;
 
-hash_table* create_hash_table(int size);
+HashTable* create_hash_table(int size);
 
-links* lookup_string(hash_table *hashtable, char *str);
+links* lookup_string(HashTable *h, char *str);
 
-int add_string(hash_table *hashtable, char *str);
+int add_string(HashTable *h, char *str);
 
-void free_table(hash_table *hashtable);
+void free_table(HashTable *h);
 
 // function for rehash
 

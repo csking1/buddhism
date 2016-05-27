@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct trainset {
+typedef struct TrainSet {
 	char* sentences[152]; /* 152 is the size of the training set*/
 	int labels[152];
-} train;
+} TrainSet;
 
-train* get_train_set();
+TrainSet* get_train_set();
 
-void* print_quotes(train* quotes);
+void* print_quotes(TrainSet* t);
 
 #endif /* READ_H*/

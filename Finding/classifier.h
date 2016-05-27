@@ -6,23 +6,23 @@
 #include "hash_tables.h"
 #include "read.h"
 
-typedef struct classifier{
-	struct train* quotes;
-	struct hash_table* dictionary;
+typedef struct Classifier{
+	struct TrainSet* train;
+	struct HashTable* dictionary;
 	float class_prob;
 	int unigrams;
 	int bigrams;
 
-} classifier;
+} Classifier;
 
-classifier* classifier_init(train* quotes, hash_table* dictionary);
+Classifier* classifier_init(TrainSet* t, HashTable* h);
 
 char* get_grams(char* sentence);
 
-float get_score(classifier* clf, char* fragment);
+float get_score(Classifier* clf, char* fragment);
 
-void calculate_probabilities(classifier* clf);
+void calculate_probabilities(Classifier* clf);
 
-float class_probability(classifier* clf);
+float class_probability(Classifier* clf);
 
 #endif /* CLASSIFIER_H_ */

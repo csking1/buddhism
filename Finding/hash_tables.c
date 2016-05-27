@@ -5,44 +5,44 @@
 
 /* http://www.sparknotes.com/cs/searching/hashtables/section3/page/2/ */
 
-hash_table* create_hash_table(int size){
-  hash_table *new;
+HashTable* create_hash_table(int size){
+  HashTable *h;
   if (size < 1){
     return NULL;
   }
 
   // sparknotes has sizeof(hash_value_t), but I don't know what that refers to
 
-  if ((new = malloc(sizeof(new))) == NULL){
+  if ((h = malloc(sizeof(h))) == NULL){
     return NULL;
   }
-  if ((new-> table = malloc(sizeof(links *) * size)) == NULL){
+  if ((h-> table = malloc(sizeof(links *) * size)) == NULL){
     return NULL;
   }
 
   /* initialize the elements of the table */
-  for (int i = 0; i < size; i++) new -> table[i] = NULL;
+  for (int i = 0; i < size; i++) h -> table[i] = NULL;
 
   /* set the table's size */
-  new -> size = size;
+  h -> size = size;
 
-  return new;
+  return h;
 }
 
-unsigned int hash(hash_table *hashtable, char *str){
+unsigned int hash(HashTable *h, char *str){
   unsigned int hashval = 0;
   for(; *str != '\0'; str++){
    hashval = *str + (hashval << 5) - hashval;
  }
-  return hashval % hashtable -> size;
+  return hashval % h->size;
 }
 
-links *lookup_string(hash_table *hashtable, char *str){
+links *lookup_string(HashTable *h, char *str){
   links *list;
-  unsigned int hashval = hash(hashtable, str);
+  unsigned int hashval = hash(h, str);
 
   // this for loop syntax looks fishy, and gets errors as well
-  for (list = hashtable -> table[hashval]; list != NULL; list = list -> next){
+  for (list = h->table[hashval]; list != NULL; list = list -> next){
     if (strcmp(str, list->string) == 0) return list;
   }
 
@@ -50,34 +50,35 @@ links *lookup_string(hash_table *hashtable, char *str){
   return NULL;
 }
 
-int add_string(hash_table *hashtable, char *str){
+int add_string(HashTable *h, char *str){
   links *new;
   links *current;
-  unsigned int hashval = hash(hashtable, str);
+  unsigned int hashval = hash(h, str);
 
   if ((new = malloc(sizeof(new))) == NULL){
     return 1;
   }
 
-  current = lookup_string(hashtable, str);
+  current = lookup_string(h, str);
   if (current != NULL) {
     // string is already in the dictionary, update the values here
+    // increment postive or negative 
     return 2;
   }
 
-  new -> string = strdup(str);
-  new -> next = hashtable -> table[hashval];
-  hashtable -> table[hashval] = new;
+  new->string = strdup(str);
+  new->next = h->table[hashval];
+  h->table[hashval] = new;
   return 0;
 }
 
-void free_table(hash_table *hashtable){
+void free_table(HashTable *h){
   links *list, *temp;
 
-  if (hashtable == NULL) return;
+  if (h == NULL) return;
 
-  for (int i = 0; i < hashtable -> size; i++){
-    list = hashtable -> table[i];
+  for (int i = 0; i < h->size; i++){
+    list = h->table[i];
     while(list != NULL){
       temp = list;
       list = list -> next;
@@ -86,6 +87,6 @@ void free_table(hash_table *hashtable){
     }
   }
 
-  free(hashtable->table);
-  free(hashtable);
+  free(h->table);
+  free(h);
 }
