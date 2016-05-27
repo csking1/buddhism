@@ -1,7 +1,6 @@
 #ifndef HASH_TABLES_H_
 #define HASH_TABLES_H_
 
-
 typedef struct LinkedList {
   char *string;
   struct LinkedList *next;

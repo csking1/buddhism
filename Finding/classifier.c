@@ -31,15 +31,14 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 	Classifier* clf = (Classifier*)malloc(sizeof(Classifier));
 	clf->dictionary =  h;
 	clf->train = t;
+	clf->class_prob = class_probability(clf);
 	for (int i = 0; i < h->size; i++){
 		int l = strlen(clf->train->sentences[i]);
-		char* grams[l]; /* always greater than number of grams*/
-
-		// this seems really inefficient ...
+		char* grams[l]; /* always greater than the actual number of grams*/
 		for (int i = 0; i < l; i++){
 			grams[i] = NULL;
+			/* this for loop seems really inefficient */
 		}
-
 		get_grams(clf->train->sentences[i], grams);
 		for (int i = 0; i < l; i++){
 			char* g = grams[i];
