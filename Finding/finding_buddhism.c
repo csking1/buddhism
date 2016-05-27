@@ -16,13 +16,13 @@ int main(){
 	// walks through the hash table and calculate probabilities
 	calculate_probabilities(clf);
 
-	// turn on the threads
-		// each thread takes a copy of the classifier
-		// reads in from the randomly-sorted gutenberg files
-		// returns the top nodes/10000 quotes
-
-	// write to csv
-
+	for (int i = 0; i<16; i++){
+		// get a chunk from gutenberg
+		// create a classifier
+		// create a thread, that takes a gutenchunk and a classifier
+		// thread gives you back 10000/16 quotes with the highest score
+		// write out the highest scores to the csv
+	}
 	return 0;
 }
 
