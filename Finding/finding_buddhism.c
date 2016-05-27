@@ -13,9 +13,10 @@ int main(){
 	hash_table* table = create_hash_table(152);
 	classifier* clf = classifier_init(quotes, table);
 	calculate_probabilities(clf);
+	printf("made it this far");
 
 	// turn on the threads
-		// each thread takes a copy of the classifier 
+		// each thread takes a copy of the classifier
 		// reads in from the randomly-sorted gutenberg files
 		// returns the top nodes/10000 quotes
 
