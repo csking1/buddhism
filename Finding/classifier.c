@@ -35,15 +35,13 @@ float class_probability(classifier* clf){
 
 classifier* classifier_init(train* quotes, hash_table* dictionary){
 	classifier* clf = (classifier*)malloc(sizeof(classifier));
-	// clf->dictionary =  dictionary;
-	// clf-> class_prob = class_probability(clf);
+	clf->dictionary =  dictionary;
+	clf->quotes = quotes;
 
-	// int l = clf->dictionary->size;
 
 
 	for (int i = 0; i<152; i++){
-		// int l = quotes->labels[i];
-		// char* grams = get_grams(quotes->sentences[i]);
+		// printf("%s\n", clf->quotes[i]);
 		// get grams will return a linked list
 		// walk through the linked list
 		// call add_to_hash_table(g)
