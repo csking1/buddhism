@@ -11,9 +11,13 @@
 int main(){
 	train* quotes = get_train_set();
 	hash_table* table = create_hash_table(152);
+	char* s = "adding";
+	add_string(table, s);
+	links* output = lookup_string(table, s);
+
+
 	classifier* clf = classifier_init(quotes, table);
 	calculate_probabilities(clf);
-	printf("made it this far");
 
 	// turn on the threads
 		// each thread takes a copy of the classifier
