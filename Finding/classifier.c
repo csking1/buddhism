@@ -26,9 +26,11 @@ LinkedList* get_grams(char* sentences){
 
 	// why don't these print out a single character at a time?
 
+
 	for (int i = 0; i < l; i++){
-		char* letter = &sentences[i];
-		printf("%s\n", letter);
+		char* letter = sentences[i];
+
+		printf("%c\n", letter);
 	}
 	// return unigrams + bigrams;
 	return list;
