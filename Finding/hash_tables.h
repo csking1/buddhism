@@ -2,25 +2,21 @@
 #define HASH_TABLES_H_
 
 
-typedef struct linked {
+typedef struct LinkedList {
   char *string;
-  struct linked *next;
+  struct LinkedList *next;
   int positive; /* running count of grams in class positive */
   int zero; /* running count of grams in class zero */
-} links;
+} LinkedList;
 
 typedef struct HashTable {
-  	int size;   /* size of the table */
-  	links **table; /*the table elements */
-	int all_unigrams;
-	int all_bigrams;
-	int positive_unigrams;
-	int positive_bigrams;
-} HashTable;
+  	int size;
+  	LinkedList **table;
+}   HashTable;
 
 HashTable* create_hash_table(int size);
 
-links* lookup_string(HashTable *h, char *str);
+LinkedList* lookup_string(HashTable *h, char *str);
 
 int add_string(HashTable *h, char *str);
 

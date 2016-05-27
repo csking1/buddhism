@@ -11,13 +11,8 @@
 int main(){
 	TrainSet* set = get_train_set();
 	HashTable* table = create_hash_table(152);
-
-	// adds each quote to the hash table and adds to the running counts
 	Classifier* clf = classifier_init(set, table);
 
-	float proba = class_probability(clf);
-	printf("%f\n", proba);
-	
 	// walks through the hash table and calculate probabilities
 	calculate_probabilities(clf);
 

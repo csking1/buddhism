@@ -5,26 +5,6 @@
 #include "hash_tables.h"
 #include "read.h"
 
-// set the order of the bigrams by alphabetical
-
-char* get_grams(char* sentences){
-	int l = strlen(sentences);
-	// printf("%s\n",sentences );
-
-	// links* intermediate;
-	// links* resolve;
-
-	for (int i = 0; i < l; i++){
-		
-		// char letter = sentences[i];
-		// printf("%s\n", letter);
-		printf("%s\n", &sentences[i]);
-	}
-
-	// this will return a linked list
-	return "this is a string I swear";
-}
-
 float class_probability(Classifier* clf){
 	float count = 0;
 	int l = clf->dictionary->size;
@@ -37,18 +17,31 @@ float class_probability(Classifier* clf){
 	return count/l;
 }
 
+// set the order of the bigrams by some sequence that doesn't change (like alphabetical)
+LinkedList* get_grams(char* sentences){
+	LinkedList* list;
+	int l = strlen(sentences);
+	LinkedList* unigrams;
+	LinkedList* bigrams;
+
+	// why don't these print out a single character at a time?
+
+	for (int i = 0; i < l; i++){
+		char* letter = &sentences[i];
+		printf("%s\n", letter);
+	}
+	// return unigrams + bigrams;
+	return list;
+}
+
 Classifier* classifier_init(TrainSet* t, HashTable* h){
 	Classifier* clf = (Classifier*)malloc(sizeof(Classifier));
 	clf->dictionary =  h;
 	clf->train = t;
-
 	for (int i = 0; i<h->size; i++){
-		// printf("%s\n", clf->quotes[i]);
-		// get grams will return a linked list
-		// walk through the linked list
-		// call add_to_hash_table(g)
+		LinkedList* grams = get_grams(clf->train->sentences[i]);
+		// call add_to_hash_table(g) for each element in the linked list
 	}
-
 	return clf;
 }
 

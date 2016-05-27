@@ -3,66 +3,66 @@
 #include <string.h>
 #include "hash_tables.h"
 
-/* http://www.sparknotes.com/cs/searching/hashtables/section3/page/2/ */
+/* Based on the example http://www.sparknotes.com/cs/searching/hashtables/section3/
+  With specialization for reading in grams and calculating frequencies
+  And my own rehashing function */
 
 HashTable* create_hash_table(int size){
   HashTable *h;
   if (size < 1){
     return NULL;
   }
-
-  // sparknotes has sizeof(hash_value_t), but I don't know what that refers to
-
   if ((h = malloc(sizeof(h))) == NULL){
     return NULL;
   }
-  if ((h-> table = malloc(sizeof(links *) * size)) == NULL){
+  if ((h->table = malloc(sizeof(h->table) * size)) == NULL){
     return NULL;
   }
-
   /* initialize the elements of the table */
-  for (int i = 0; i < size; i++) h -> table[i] = NULL;
-
-  /* set the table's size */
-  h -> size = size;
-
+  for (int i = 0; i < size; i++) {
+    h->table[i] = NULL;
+  }
+  h->size = size;
   return h;
 }
 
 unsigned int hash(HashTable *h, char *str){
   unsigned int hashval = 0;
   for(; *str != '\0'; str++){
+    // this line is a mystery
    hashval = *str + (hashval << 5) - hashval;
  }
   return hashval % h->size;
 }
 
-links *lookup_string(HashTable *h, char *str){
-  links *list;
+LinkedList *lookup_string(HashTable *h, char *str){
+  LinkedList *list;
   unsigned int hashval = hash(h, str);
-
-  // this for loop syntax looks fishy, and gets errors as well
+  // I don't understand the syntax here
   for (list = h->table[hashval]; list != NULL; list = list -> next){
     if (strcmp(str, list->string) == 0) return list;
   }
-
   // if there's no match, return NULL
   return NULL;
 }
 
+// this might have to take two booleans, whether or not the string is a positive, and whether or not it's a unigram
 int add_string(HashTable *h, char *str){
-  links *new;
-  links *current;
+  LinkedList *new;
+  LinkedList *current;
   unsigned int hashval = hash(h, str);
-
   if ((new = malloc(sizeof(new))) == NULL){
     return 1;
   }
-
   current = lookup_string(h, str);
   if (current != NULL) {
     // string is already in the dictionary, update the values here
-    // increment postive or negative 
+    // increment postive or negative
+    // if it's a unigram:
+          // clf->all_unigrams ++;
+          // if it's a unigram and it's positive; clf->positive_unigrams ++;
+    // else clf->all_bigrams++;
+          // if it's a bigram and it's positive; clf->positive_bigrams ++;
     return 2;
   }
 
@@ -73,10 +73,8 @@ int add_string(HashTable *h, char *str){
 }
 
 void free_table(HashTable *h){
-  links *list, *temp;
-
+  LinkedList *list, *temp;
   if (h == NULL) return;
-
   for (int i = 0; i < h->size; i++){
     list = h->table[i];
     while(list != NULL){
@@ -86,7 +84,6 @@ void free_table(HashTable *h){
       free(temp);
     }
   }
-
   free(h->table);
   free(h);
 }

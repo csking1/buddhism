@@ -10,14 +10,15 @@ typedef struct Classifier{
 	struct TrainSet* train;
 	struct HashTable* dictionary;
 	float class_prob;
-	int unigrams;
-	int bigrams;
-
+	int all_unigrams;
+	int all_bigrams;
+	int positive_unigrams;
+	int positive_bigrams;
 } Classifier;
 
 Classifier* classifier_init(TrainSet* t, HashTable* h);
 
-char* get_grams(char* sentence);
+LinkedList* get_grams(char* sentence);
 
 float get_score(Classifier* clf, char* fragment);
 
