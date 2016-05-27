@@ -35,7 +35,13 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 		int l = strlen(clf->train->sentences[i]);
 		char* grams[l]; /* always greater than number of grams*/
 		get_grams(clf->train->sentences[i], grams);
-		// call add_to_hash_table(g) for each element in the linked list
+		for (int i = 0; i < l; ++i){
+			char* g = grams[i];
+			if(g != NULL){
+				// add_to_hash_table(g) for each element in the linked list
+			}
+		}
+
 	}
 	return clf;
 }
