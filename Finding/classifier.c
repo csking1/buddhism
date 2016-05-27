@@ -15,6 +15,9 @@ char* get_grams(char* sentences){
 	links* resolve;
 
 	for (int i = 0; i < l; i++){
+		
+		// char letter = sentences[i];
+		// printf("%s\n", letter);
 		printf("%s\n", &sentences[i]);
 	}
 
