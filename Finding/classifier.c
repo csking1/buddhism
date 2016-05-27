@@ -9,13 +9,14 @@
 
 char* get_grams(char* sentences){
 	int l = strlen(sentences);
-	printf("%s\n",sentences );
+	// printf("%s\n",sentences );
 
-	// links* intermediate;
-	// links* resolve;
-	// for (int i = 0; i < l; i++){
-	// 	printf("%s\n", &sentences[i]);
-	// }
+	links* intermediate;
+	links* resolve;
+
+	for (int i = 0; i < l; i++){
+		printf("%s\n", &sentences[i]);
+	}
 
 	// walk through sentences, add each word to a intermediate linked list
 	// walk through intermediate linked list, add each pair of words to return linked list
