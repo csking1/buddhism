@@ -5,7 +5,7 @@
 
 /* http://www.sparknotes.com/cs/searching/hashtables/section3/page/2/ */
 
-hash_table *create_hash_table(int size){
+hash_table* create_hash_table(int size){
   hash_table *new;
   if (size < 1){
     return NULL;

@@ -27,15 +27,15 @@ char* get_grams(char* sentences){
 
 float class_probability(classifier* clf){
 	// P(1) : number of postive quotes / length(Y)
-	printf("%s\n", "executed class probability");
-	int length = clf->dictionary->size;
-	printf("%d\n", length);
+	// printf("%s\n", "executed class probability");
+	// int length = clf->dictionary->size;
+	// printf("%d\n", length);
 	return 0.0;
 }
 
 classifier* classifier_init(train* quotes, hash_table* dictionary){
 	classifier* clf = (classifier*)malloc(sizeof(classifier));
-	clf->dictionary =  dictionary;
+	// clf->dictionary =  dictionary;
 	// clf-> class_prob = class_probability(clf);
 
 	// int l = clf->dictionary->size;
@@ -43,7 +43,6 @@ classifier* classifier_init(train* quotes, hash_table* dictionary){
 
 	for (int i = 0; i<152; i++){
 		// int l = quotes->labels[i];
-
 		// char* grams = get_grams(quotes->sentences[i]);
 		// get grams will return a linked list
 		// walk through the linked list
