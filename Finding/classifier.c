@@ -18,21 +18,30 @@ float class_probability(Classifier* clf){
 }
 
 // set the order of the bigrams by some sequence that doesn't change (like alphabetical)
-LinkedList* get_grams(char* sentences){
-	LinkedList* list;
+int get_grams(char* sentences){
 	int l = strlen(sentences);
 	LinkedList* unigrams;
 	LinkedList* bigrams;
-
-	for (int i = 0; i < l; i++){
-		char letter = sentences[i];
-		if (strcmp(letter, ' ')==0){
-			printf("%s\n","found an empty character");
-		}
-		// printf("%c\n", letter);
+	char* words = strtok(sentences, " ");
+	while (words != NULL){
+		printf("%s\n", words);
+		words = strtok(NULL, " ");
 	}
+
+
+
+
+
+	// for (int i = 0; i < l; i++){
+	// 	char letter = sentences[i];
+	// 	// char empty = "";
+	// 	if (strcmp(&letter, "") == 0){
+	// 		printf("%s\n","found an empty character");
+	// 	}
+		// printf("%c\n", letter);
+	// }
 	// return unigrams + bigrams;
-	return list;
+	return bigrams;
 }
 
 Classifier* classifier_init(TrainSet* t, HashTable* h){
