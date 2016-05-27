@@ -5,14 +5,14 @@
 #include "hash_tables.h"
 #include "read.h"
 
-// set the order of the grams by alphabetical
+// set the order of the bigrams by alphabetical
 
 char* get_grams(char* sentences){
 	int l = strlen(sentences);
 	// printf("%s\n",sentences );
 
-	links* intermediate;
-	links* resolve;
+	// links* intermediate;
+	// links* resolve;
 
 	for (int i = 0; i < l; i++){
 		
@@ -21,27 +21,33 @@ char* get_grams(char* sentences){
 		printf("%s\n", &sentences[i]);
 	}
 
-	// walk through sentences, add each word to a intermediate linked list
-	// walk through intermediate linked list, add each pair of words to return linked list
+	// this will return a linked list
 	return "this is a string I swear";
 }
 
 float class_probability(classifier* clf){
 	// P(1) : number of postive quotes / length(Y)
+	printf("%s\n", "executed class probability");
+	int length = clf->dictionary->size;
+	printf("%d\n", length);
 	return 0.0;
 }
 
-classifier* classifier_init(train* quotes, hash_table* hash_table){
+classifier* classifier_init(train* quotes, hash_table* dictionary){
 	classifier* clf = (classifier*)malloc(sizeof(classifier));
-	clf-> class_prob = class_probability(clf);
+	clf->dictionary =  dictionary;
+	// clf-> class_prob = class_probability(clf);
 
-	/* 152 is the size of the training set*/
+	// int l = clf->dictionary->size;
+
+
 	for (int i = 0; i<152; i++){
 		// int l = quotes->labels[i];
-		char* grams = get_grams(quotes->sentences[i]);
-		printf("%s\n", grams);
 
-		// increment unigrams and bigrams
+		// char* grams = get_grams(quotes->sentences[i]);
+		// get grams will return a linked list
+		// walk through the linked list
+		// call add_to_hash_table(g)
 	}
 
 	return clf;

@@ -11,7 +11,11 @@
 int main(){
 	train* quotes = get_train_set();
 	hash_table* table = create_hash_table(152);
+
+	// adds each quote to the hash table and adds to the running counts
 	classifier* clf = classifier_init(quotes, table);
+	
+	// walks through the hash table and calculate probabilities
 	calculate_probabilities(clf);
 
 	// turn on the threads
