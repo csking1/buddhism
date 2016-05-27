@@ -24,13 +24,12 @@ LinkedList* get_grams(char* sentences){
 	LinkedList* unigrams;
 	LinkedList* bigrams;
 
-	// why don't these print out a single character at a time?
-
-
 	for (int i = 0; i < l; i++){
-		char* letter = sentences[i];
-
-		printf("%c\n", letter);
+		char letter = sentences[i];
+		if (strcmp(letter, ' ')==0){
+			printf("%s\n","found an empty character");
+		}
+		// printf("%c\n", letter);
 	}
 	// return unigrams + bigrams;
 	return list;
