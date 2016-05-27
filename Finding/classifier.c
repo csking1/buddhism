@@ -21,7 +21,6 @@ void get_grams(char* sentences, char* grams[]){
 	int count = 0;
 	char* words = strtok(sentences, " ");
 	while (words != NULL){
-		// printf("%s\n", words);
 		grams[count] = words;
 		words = strtok(NULL, " ");
 		count ++;
@@ -36,6 +35,9 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 		int l = strlen(clf->train->sentences[i]);
 		char* grams[l]; /* always greater than number of grams*/
 		get_grams(clf->train->sentences[i], grams);
+		for (int i = 0; i < l; ++i){
+			printf("%s\n", grams[i]);
+		}
 		// call add_to_hash_table(g) for each element in the linked list
 	}
 	return clf;
