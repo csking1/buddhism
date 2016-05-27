@@ -17,31 +17,15 @@ float class_probability(Classifier* clf){
 	return count/l;
 }
 
-// set the order of the bigrams by some sequence that doesn't change (like alphabetical)
-int get_grams(char* sentences){
-	int l = strlen(sentences);
-	LinkedList* unigrams;
-	LinkedList* bigrams;
+void get_grams(char* sentences, char* grams[]){
+	int count = 0;
 	char* words = strtok(sentences, " ");
 	while (words != NULL){
-		printf("%s\n", words);
+		// printf("%s\n", words);
+		grams[count] = words;
 		words = strtok(NULL, " ");
+		count ++;
 	}
-
-
-
-
-
-	// for (int i = 0; i < l; i++){
-	// 	char letter = sentences[i];
-	// 	// char empty = "";
-	// 	if (strcmp(&letter, "") == 0){
-	// 		printf("%s\n","found an empty character");
-	// 	}
-		// printf("%c\n", letter);
-	// }
-	// return unigrams + bigrams;
-	return bigrams;
 }
 
 Classifier* classifier_init(TrainSet* t, HashTable* h){
@@ -49,7 +33,9 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 	clf->dictionary =  h;
 	clf->train = t;
 	for (int i = 0; i<h->size; i++){
-		LinkedList* grams = get_grams(clf->train->sentences[i]);
+		int l = strlen(clf->train->sentences[i]);
+		char* grams[l]; /* always greater than number of grams*/
+		get_grams(clf->train->sentences[i], grams);
 		// call add_to_hash_table(g) for each element in the linked list
 	}
 	return clf;

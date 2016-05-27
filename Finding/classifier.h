@@ -18,12 +18,8 @@ typedef struct Classifier{
 
 Classifier* classifier_init(TrainSet* t, HashTable* h);
 
-LinkedList* get_grams(char* sentence);
-
-float get_score(Classifier* clf, char* fragment);
+void get_grams(char* sentence, char* grams[]);
 
 void calculate_probabilities(Classifier* clf);
-
-float class_probability(Classifier* clf);
 
 #endif /* CLASSIFIER_H_ */
