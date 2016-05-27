@@ -6,7 +6,6 @@
 #include "hash_tables.h"
 #include "read.h"
 
-
 typedef struct classifier{
 	struct train* quotes;
 	struct hash_table* dictionary;

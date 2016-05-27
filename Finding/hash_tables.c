@@ -46,7 +46,6 @@ links *lookup_string(hash_table *hashtable, char *str){
     if (strcmp(str, list->string) == 0) return list;
   }
 
-
   // if there's no match, return NULL
   return NULL;
 }

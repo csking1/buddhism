@@ -1,11 +1,25 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "classifier.h"
 #include "hash_tables.h"
 #include "read.h"
 
+// set the order of the grams by alphabetical
+
 char* get_grams(char* sentences){
-	return "this isn't the actual answer";
+	int l = strlen(sentences);
+	printf("%s\n",sentences );
+
+	// links* intermediate;
+	// links* resolve;
+	// for (int i = 0; i < l; i++){
+	// 	printf("%s\n", &sentences[i]);
+	// }
+
+	// walk through sentences, add each word to a intermediate linked list
+	// walk through intermediate linked list, add each pair of words to return linked list
+	return "this is a string I swear";
 }
 
 float class_probability(classifier* clf){
@@ -17,12 +31,12 @@ classifier* classifier_init(train* quotes, hash_table* hash_table){
 	classifier* clf = (classifier*)malloc(sizeof(classifier));
 	clf-> class_prob = class_probability(clf);
 
-
 	/* 152 is the size of the training set*/
 	for (int i = 0; i<152; i++){
-		//int l = quotes->labels[i];
-		//char* grams = get_grams(quotes->sentences[i]);
-		// walk through grams, add to hash table
+		// int l = quotes->labels[i];
+		char* grams = get_grams(quotes->sentences[i]);
+		printf("%s\n", grams);
+
 		// increment unigrams and bigrams
 	}
 
@@ -54,4 +68,3 @@ float get_score(classifier* clf, char* fragment){
 
 	return 0.0;
 }
-

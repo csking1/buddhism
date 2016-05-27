@@ -13,7 +13,7 @@ typedef struct hash_map {
 
 hash_table* create_hash_table(int size);
 
-links *lookup_string(hash_table *hashtable, char *str);
+links* lookup_string(hash_table *hashtable, char *str);
 
 int add_string(hash_table *hashtable, char *str);
 
