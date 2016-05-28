@@ -57,12 +57,6 @@ int add_string(HashTable *h, char *str){
   current = lookup_string(h, str);
   if (current != NULL) {
     // string is already in the dictionary, update the values here
-    // increment postive or negative
-    // if it's a unigram:
-          // clf->all_unigrams ++;
-          // if it's a unigram and it's positive; clf->positive_unigrams ++;
-    // else clf->all_bigrams++;
-          // if it's a bigram and it's positive; clf->positive_bigrams ++;
     return 2;
   }
 
