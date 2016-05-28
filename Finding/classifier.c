@@ -35,8 +35,10 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 	clf->all_unigrams = 0;
 	clf->positive_unigrams = 0;
 
+	// Walk through the training set, tokenize each line, add to hash table and increment counts
 	for (int i = 0; i < h->size; i++){
 		int l = strlen(clf->train->sentences[i]);
+		int class = clf->train->labels[i];
 		char* grams[l]; /* always greater than the actual number of grams*/
 		for (int i = 0; i < l; i++){
 			grams[i] = NULL;
@@ -46,14 +48,16 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 		for (int i = 0; i < l; i++){
 			char* g = grams[i];
 			if(g != NULL){
-				printf("%s\n", g);
 				clf->all_unigrams++;
 				// add_to_hash_table(g) for each element in the linked list
+				if (class == 1){
+					clf->positive_unigrams++;
+				}
 			}
 		}
 	}
-	printf("%s\n", "found this many unigrams: ");
-	printf("%d\n", clf->all_unigrams);
+	printf("%s\n", "found this many positive: ");
+	printf("%d\n", clf->positive_unigrams);
 	return clf;
 }
 
