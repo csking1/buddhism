@@ -2,6 +2,7 @@
 import csv
 import requests
 import json
+import re
 # KEY = 'api-key=01f2b56924bc493e87d25177ef24a697'
 
 url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?'

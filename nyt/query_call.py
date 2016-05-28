@@ -58,9 +58,10 @@ def get_keywords(quote, bucket):
 		print ("No returned results")
 	else:
 		for word in keywords_list:
-			##regex removes some NYT keyword anomalies like "Love (Emotion)"
+			regex removes some NYT keyword anomalies like "Love (Emotion)"
 			regex = re.compile('\(.+?\)')
 			word = regex.sub('', word)
+			word = str(word)
 			QUART_DICT[bucket].append(word)
 
 def convert_dict_to_csv():
@@ -73,7 +74,7 @@ def convert_dict_to_csv():
 		name = "articles/" + key_string + ".csv"
 
 		with open(name, 'w', newline="") as csvfile:
-			w = csv.writer(csvfile, delimiter=',')
+			w = csv.writer(csvfile)
 			words = QUART_DICT[key]
 			w.writerow(words)
 
