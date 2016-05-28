@@ -58,7 +58,7 @@ def get_keywords(quote, bucket):
 		print ("No returned results")
 	else:
 		for word in keywords_list:
-			regex removes some NYT keyword anomalies like "Love (Emotion)"
+			# regex removes some NYT keyword anomalies like "Love (Emotion)"
 			regex = re.compile('\(.+?\)')
 			word = regex.sub('', word)
 			word = str(word)
