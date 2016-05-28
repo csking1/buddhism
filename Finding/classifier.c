@@ -48,16 +48,14 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 		for (int i = 0; i < l; i++){
 			char* g = grams[i];
 			if(g != NULL){
-				clf->all_unigrams++;
 				// add_to_hash_table(g) for each element in the linked list
+				clf->all_unigrams++;
 				if (class == 1){
 					clf->positive_unigrams++;
 				}
 			}
 		}
 	}
-	printf("%s\n", "found this many positive: ");
-	printf("%d\n", clf->positive_unigrams);
 	return clf;
 }
 

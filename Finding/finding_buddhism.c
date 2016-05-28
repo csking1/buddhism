@@ -10,7 +10,8 @@
 
 int main(){
 	TrainSet* set = get_train_set();
-	HashTable* table = create_hash_table(152);
+	HashTable* table = create_hash_table(152); /*this breaks at any size around 200 or larger */
+
 	Classifier* clf = classifier_init(set, table);
 
 	// walks through the hash table and calculate probabilities
