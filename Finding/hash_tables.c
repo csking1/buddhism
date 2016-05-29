@@ -20,9 +20,11 @@ HashTable* create_hash_table(float size){
   if ((h->table = malloc(sizeof(h->table) * size)) == NULL){
     return NULL;
   }
+
   /* initialize the elements of the table */
   for (int i = 0; i < size; i++) {
     h->table[i] = NULL;
+    // h-table[i]->string=NULL;
   }
   h->size = size;
   h->grams_count = 0.0;
@@ -81,12 +83,8 @@ HashTable* rehash(HashTable *h){
   for(int i = 0; i<h->size; i++){
 
     // add an indicator for yes there is a string here
-    printf("%s\n", h->table[i]->string);
-    if (h->table[i]->string != NULL){
+    if (h->table[i] != NULL){
       printf("%s\n", "check for string logic worked");
-    }
-
-    if (h->table[i]->string){
       char* string = h->table[i]->string;
       transfer_values(new_table, string, h->table[i]->positive, h->table[i]->zero);
     }
