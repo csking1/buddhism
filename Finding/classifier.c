@@ -82,15 +82,15 @@ void calculate_probabilities(Classifier* clf){
 			printf("%s\n", clf->dictionary->table[i]->string);
 			count++;
 			// P(unigram) :  0 count + 1 count / all_unigrams,
-			// int sum = clf->dictionary->table[i]->zero;
-			// sum += clf->dictionary->table[i]->positive;
-			// float add_one = (float)sum / (float)clf->all_unigrams;
-			// clf->dictionary->table[i]->gram_probability = add_one;
+			int sum = clf->dictionary->table[i]->zero;
+			sum += clf->dictionary->table[i]->positive;
+			float add_one = (float)sum / (float)clf->all_unigrams;
+			clf->dictionary->table[i]->gram_probability = add_one;
 
-			// // // P(unigram|1) : positive count for this unigram / all positive unigrams,
-			// int positive_count = clf->dictionary->table[i]-> positive;
-			// float add_two = (float)positive_count / (float)clf->positive_unigrams;
-			// clf->dictionary->table[i]->probability_gram_is_positive = add_two;
+			// // P(unigram|1) : positive count for this unigram / all positive unigrams,
+			int positive_count = clf->dictionary->table[i]-> positive;
+			float add_two = (float)positive_count / (float)clf->positive_unigrams;
+			clf->dictionary->table[i]->probability_gram_is_positive = add_two;
 		}
 	}
 
