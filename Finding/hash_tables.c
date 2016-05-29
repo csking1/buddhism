@@ -61,13 +61,14 @@ int add_string(HashTable *h, char *str, int rehash){
     // string is already in the dictionary, update the values here
     return 2;
   }
+  printf("%d\n", h->new_grams_count);
   new->string = strdup(str);
+  printf("%d\n", h->new_grams_count);
   new->next = h->table[hashval];
   h->table[hashval] = new;
-
   // if function is not being used for rehashing
   if (rehash == 0){
-    h->new_grams_count++;
+    h->new_grams_count ++;
   }
   return 0;
 }
