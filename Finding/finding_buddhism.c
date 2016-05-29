@@ -14,7 +14,7 @@ int main(){
 
 	Classifier* clf = classifier_init(set, table);
 
-	calculate_probabilities(clf);
+	// calculate_probabilities(clf);
 
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg

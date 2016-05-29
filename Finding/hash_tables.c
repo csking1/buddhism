@@ -98,7 +98,7 @@ HashTable* add_string(HashTable *h, char *str, int class){
       }
     return h;
   }
-  new->string = strdup(str);
+  new->string = str;
 
   if (class == 0){
     new->zero = 1;

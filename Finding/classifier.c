@@ -37,7 +37,13 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 
 	// Walk through the training set, tokenize each line, add to hash table and increment counts
 	for (int i = 0; i < h->size; i++){
+		printf("%d\n", i);
+
+		// on the csil machines this gets a segmentation fault
+		printf("%s\n", clf->train->sentences[i]);
+		
 		if (clf->train->sentences[i] != NULL){
+			printf("%s\n", "made it here");
 			int l = strlen(clf->train->sentences[i]);
 			int class = clf->train->labels[i];
 			char* grams[l]; /* always greater than the actual number of grams*/
@@ -45,7 +51,6 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 				grams[i] = NULL;
 				/* this for loop seems really inefficient */
 			}
-
 			get_grams(clf->train->sentences[i], grams);
 
 			for (int i = 0; i < l; i++){
@@ -57,11 +62,17 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 					if (class == 1){
 						clf->positive_unigrams++;
 					}
+
 				}
 			}
+
 		}
+	
+	printf("%s\n", "got to the end of another sentence ");
 	}
+
 	return clf;
+
 }
 
 void calculate_probabilities(Classifier* clf){
