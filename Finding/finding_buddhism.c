@@ -5,7 +5,6 @@
 #include "classifier.h"
 
 
-float GROWTH_RATIO = 5;
 
 // add in removal of stopwords
 

@@ -53,14 +53,32 @@ bool is_too_full(HashTable *h){
   return (h->grams_count / h->size) >= TOO_FULL_RATIO;
 }
 
+
+
+int transfer_values(HashTable *h, char *new_string, int positive_count, int zero_count){
+  LinkedList *new;
+  if ((new = malloc(sizeof(new))) == NULL){
+    return 1;
+  }
+  unsigned int hashval = hash(h, new_string);
+  new->string = new_string;
+  new->next = h->table[hashval];
+  new->positive = positive_count;
+  new->zero = zero_count;
+  h->table[hashval] = new;
+  h->grams_count ++;
+  return 0;
+}
+
+
 HashTable* rehash(HashTable *h){
   int new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
   for(int i = 0; i<h->size; i++){
     char* string = h->table[i]->string;
-    // need to add some logic here to handle the transfer of counts as well
-    add_string(new_table, string);
+    transfer_values(new_table, string, h->table[i]->positive, h->table[i]->zero);
   }
+  return new_table;
 }
 
 
