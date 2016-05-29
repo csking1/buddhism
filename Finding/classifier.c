@@ -27,23 +27,16 @@ void get_grams(char* sentences, char* grams[]){
 	}
 }
 
-
 void walk_through_train(Classifier* clf){
 
 	int range = clf->dictionary->size;
 
 	for (int i = 0; i < range; i++){
+		printf("%s\n", clf->train->sentences[i]);
 		
-		printf("%d\n", i);
-
 		if (clf->train->sentences[i] != NULL){
-			printf("%s\n", "dropping into the if statement again");
-
 
 			int l = strlen(clf->train->sentences[i]);
-			printf("%s\n", "got the length of the sentence");
-			
-
 			int class = clf->train->labels[i];
 			char* grams[l]; /* always greater than the actual number of grams*/
 			for (int i = 0; i < l; i++){
@@ -108,7 +101,6 @@ void calculate_probabilities(Classifier* clf){
 	}
 	printf("%d\n", count);
 }
-
 
 // takes a single sentence, returns score
 float get_score(Classifier* clf, char* fragment){

@@ -5,7 +5,7 @@
 #include "hash_tables.h"
 
 float TOO_FULL_RATIO = 0.50;
-float GROWTH_RATIO = 5;
+float GROWTH_RATIO = 4;
 
 // Skeleton from http://www.sparknotes.com/cs/searching/hashtables/section3/, but most is original
 
