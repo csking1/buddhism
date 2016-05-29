@@ -10,11 +10,13 @@
 
 int main(){
 	TrainSet* set = get_train_set();
-	HashTable* table = create_hash_table(152); /*this breaks at any size around 200 or larger */
+	HashTable* table = create_hash_table(152.0); /*this breaks at any size around 200 or larger */
 
 	Classifier* clf = classifier_init(set, table);
 
-	// calculate_probabilities(clf);
+	printf("%d\n", clf->all_unigrams);
+
+	calculate_probabilities(clf);
 
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg
