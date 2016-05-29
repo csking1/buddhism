@@ -14,6 +14,8 @@ int main(){
 
 	Classifier* clf = classifier_init(set, table);
 
+	printf("%d\n", clf->all_unigrams);
+
 	calculate_probabilities(clf);
 
 	for (int i = 0; i<16; i++){

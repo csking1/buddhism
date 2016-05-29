@@ -21,10 +21,8 @@ HashTable* create_hash_table(float size){
     return NULL;
   }
 
-  /* initialize the elements of the table */
   for (int i = 0; i < size; i++) {
     h->table[i] = NULL;
-    // h-table[i]->string=NULL;
   }
   h->size = size;
   h->grams_count = 0.0;
@@ -38,7 +36,6 @@ unsigned int hash(HashTable *h, char *str){
  }
  float s = h-> size;
  int resolve = hashval & (int)s;
- // this has to return an integer
   return resolve;
 }
 
@@ -78,7 +75,6 @@ int transfer_values(HashTable *h, char *new_string, int positive_count, int zero
 HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
-
   for(int i = 0; i<h->size; i++){
     if (h->table[i] != NULL){
       char* string = h->table[i]->string;
@@ -88,7 +84,6 @@ HashTable* rehash(HashTable *h){
   return new_table;
 }
 
-// this returns a new hash table every time because it calls rehash, which creates a new table
 HashTable* add_string(HashTable *h, char *str, int class){
   LinkedList *new = malloc(sizeof *new);
   LinkedList *current;
@@ -118,9 +113,7 @@ HashTable* add_string(HashTable *h, char *str, int class){
   h->grams_count = h->grams_count + 1.0;
 
   if(is_too_full(h) == true){
-    // the problem is this line right here
     HashTable *new = rehash(h);
-    printf("%s\n", "rehashed finished");
     return new;
   }
   return h;

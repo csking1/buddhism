@@ -28,7 +28,6 @@ void get_grams(char* sentences, char* grams[]){
 }
 
 Classifier* classifier_init(TrainSet* t, HashTable* h){
-	// Classifier* clf = (Classifier*)malloc(sizeof(Classifier));
 	Classifier *clf = malloc(sizeof *clf);
 	clf->dictionary =  h;
 	clf->train = t;
@@ -38,14 +37,8 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 
 	// Walk through the training set, tokenize each line, add to hash table and increment counts
 	for (int i = 0; i < h->size; i++){
-
 		if (clf->train->sentences[i] != NULL){
-			printf("%s\n", clf->train->sentences[i]);
-			printf("%s\n", "starting with another sentence");
-
 			int l = strlen(clf->train->sentences[i]);
-			printf("%s\n", "got the length of the sentences");
-
 			int class = clf->train->labels[i];
 			char* grams[l]; /* always greater than the actual number of grams*/
 			for (int i = 0; i < l; i++){
