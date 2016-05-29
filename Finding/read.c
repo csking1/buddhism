@@ -3,8 +3,6 @@
 #include <string.h>
 #include "read.h"
 
-int SIZE_R = 50;
-
 TrainSet* get_train_set(){
    TrainSet* t = (TrainSet*)malloc(sizeof(TrainSet));
    FILE *fp;
@@ -29,11 +27,4 @@ TrainSet* get_train_set(){
    }
    //fclose(fp);
    return t;
-}
-
-void* print_quotes(TrainSet* t){
-   for (int i=0; i<SIZE_R; i++){
-      printf("%s\n", t-> sentences[i]);
-   }
-   return NULL;
 }

@@ -7,15 +7,15 @@
 // add in removal of stopwords
 
 // this whole function should take the size of the training set
-float SIZE = 50.0;
 
+ 
 int main(){
 	TrainSet* set = get_train_set();
-	HashTable* table = create_hash_table(SIZE); /*this breaks at any size around 200 or larger, must take a float */
+	HashTable* table = create_hash_table(152.0); /*this breaks at any size around 200 or larger, must take a float */ 
 
 	Classifier* clf = classifier_init(set, table);
 
-	calculate_probabilities(clf);
+	// calculate_probabilities(clf);
 
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg

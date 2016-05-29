@@ -14,9 +14,6 @@ HashTable* create_hash_table(float size){
   if (size < 1){
     return NULL;
   }
-  // if ((h = malloc(sizeof h*)) == NULL){
-  //   return NULL;
-  // }
   if ((h->table = malloc(sizeof(h->table) * size)) == NULL){
     return NULL;
   }

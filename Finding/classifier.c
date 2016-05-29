@@ -27,19 +27,23 @@ void get_grams(char* sentences, char* grams[]){
 	}
 }
 
-Classifier* classifier_init(TrainSet* t, HashTable* h){
-	Classifier *clf = malloc(sizeof *clf);
-	clf->dictionary =  h;
-	clf->train = t;
-	clf->class_prob = class_probability(clf);
-	clf->all_unigrams = 0;
-	clf->positive_unigrams = 0;
 
-	// Walk through the training set, tokenize each line, add to hash table and increment counts
-	for (int i = 0; i < h->size; i++){
+void walk_through_train(Classifier* clf){
+
+	int range = clf->dictionary->size;
+
+	for (int i = 0; i < range; i++){
 		
+		printf("%d\n", i);
+
 		if (clf->train->sentences[i] != NULL){
+			printf("%s\n", "dropping into the if statement again");
+
+
 			int l = strlen(clf->train->sentences[i]);
+			printf("%s\n", "got the length of the sentence");
+			
+
 			int class = clf->train->labels[i];
 			char* grams[l]; /* always greater than the actual number of grams*/
 			for (int i = 0; i < l; i++){
@@ -61,6 +65,16 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 			}
 		}
 	}
+}
+
+Classifier* classifier_init(TrainSet* t, HashTable* h){
+	Classifier *clf = malloc(sizeof *clf);
+	clf->dictionary =  h;
+	clf->train = t;
+	clf->class_prob = class_probability(clf);
+	clf->all_unigrams = 0;
+	clf->positive_unigrams = 0;
+	walk_through_train(clf);
 	return clf;
 }
 
