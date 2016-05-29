@@ -51,7 +51,6 @@ LinkedList *lookup_string(HashTable *h, char *str){
 }
 
 bool is_too_full(HashTable *h){
-  float compare = h->grams_count / h->size;
   return (h->grams_count / h->size) >= TOO_FULL_RATIO;
 }
 
@@ -77,9 +76,20 @@ int transfer_values(HashTable *h, char *new_string, int positive_count, int zero
 HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
+
+  // the hash table isn't full, so it's grabbing the string of a null value
   for(int i = 0; i<h->size; i++){
-    char* string = h->table[i]->string;
-    transfer_values(new_table, string, h->table[i]->positive, h->table[i]->zero);
+
+    // add an indicator for yes there is a string here
+    printf("%s\n", h->table[i]->string);
+    if (h->table[i]->string != NULL){
+      printf("%s\n", "check for string logic worked");
+    }
+
+    if (h->table[i]->string){
+      char* string = h->table[i]->string;
+      transfer_values(new_table, string, h->table[i]->positive, h->table[i]->zero);
+    }
   }
   return new_table;
 }
@@ -109,18 +119,14 @@ HashTable* add_string(HashTable *h, char *str, int class){
     new->positive = 1;
     new->positive = 0;
   }
-
   new->next = h->table[hashval];
   h->table[hashval] = new;
   h->grams_count = h->grams_count + 1.0;
 
-  // this isn't catching it soon enough
-  bool go = is_too_full(h);
-
-
-  if(go == true){
+  if(is_too_full(h) == true){
     // the problem is this line right here
-    HashTable *h = rehash(h);
+    HashTable *new = rehash(h);
+    return new;
   }
   return h;
 }

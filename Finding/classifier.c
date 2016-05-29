@@ -45,7 +45,6 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 			grams[i] = NULL;
 			/* this for loop seems really inefficient */
 		}
-		printf("%s\n", clf->train->sentences[i]);
 		get_grams(clf->train->sentences[i], grams);
 		for (int i = 0; i < l; i++){
 			char* g = grams[i];
