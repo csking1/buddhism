@@ -11,6 +11,7 @@ import re
 
 key = '&api-key=01f2b56924bc493e87d25177ef24a697'
 QUART_DICT = {.25:[],.5:[],.75:[], 1:[]}
+DATES = {.25:[],.5:[],.75:[], 1:[]}
 NO_RETURN = 0
 
 def main(filename):
@@ -53,10 +54,12 @@ def get_keywords(quote, bucket):
 	Adds keywords to list in dictionary for each quartile of probability
 	'''
 
-	keywords_list = go(key, quote)
+	keywords_list, dates = go(key, quote)
 	if len(keywords_list) == 0:
 		print ("No returned results")
 	else:
+		for each in dates:
+			DATES[bucket].append(each[:4])
 		for word in keywords_list:
 			# regex removes some NYT keyword anomalies like "Love (Emotion)"
 			regex = re.compile('\(.+?\)')
@@ -76,6 +79,15 @@ def convert_dict_to_csv():
 		with open(name, 'w', newline="") as csvfile:
 			w = csv.writer(csvfile)
 			words = QUART_DICT[key]
+			w.writerow(words)
+
+	for key in DATES.keys():
+		key_string = str(key)
+		name = "articles/datesfor" + key_string + ".csv"
+
+		with open(name, 'w', newline="") as csvfile:
+			w = csv.writer(csvfile)
+			words = DATES[key]
 			w.writerow(words)
 
 if __name__ == '__main__':
