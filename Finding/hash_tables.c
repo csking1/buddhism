@@ -17,7 +17,6 @@ HashTable* create_hash_table(float size){
   if ((h->table = malloc(sizeof(h->table) * size)) == NULL){
     return NULL;
   }
-
   for (int i = 0; i < size; i++) {
     h->table[i] = NULL;
   }
@@ -52,20 +51,13 @@ bool is_too_full(HashTable *h){
 
 int transfer_values(HashTable *h, char *new_string, int positive_count, int zero_count){
   LinkedList *new = malloc(sizeof *new);
-  // if ((new = malloc(sizeof new*)) == NULL){
-  //   return 1;
-  // }
   unsigned int hashval = hash(h, new_string);
   new->string = new_string;
   new->next = h->table[hashval];
   new->positive = positive_count;
-
   new->zero = zero_count;
-
   h->table[hashval] = new;
-
   h->grams_count = h->grams_count + 1.0;
-
   return 0;
 }
 
@@ -81,22 +73,22 @@ HashTable* rehash(HashTable *h){
   return new_table;
 }
 
-HashTable* add_string(HashTable *h, char *str, int class){
-  LinkedList *new = malloc(sizeof *new);
-  LinkedList *current;
-  unsigned int hashval = hash(h, str);
-  current = lookup_string(h, str);
+
+bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
+  /*
+  Returns true if the string is already in the table
+  Increments counting either way
+  */
   if (current != NULL) {
       if (class == 0){
-        new->zero ++;
+        current->zero ++;
       }
       else {
-        new->positive ++;
+        current->positive ++;
       }
-    return h;
+    return true;
   }
-  new->string = str;
-
+  h->grams_count = h->grams_count + 1.0;
   if (class == 0){
     new->zero = 1;
     new->positive = 0;
@@ -105,9 +97,22 @@ HashTable* add_string(HashTable *h, char *str, int class){
     new->positive = 1;
     new->positive = 0;
   }
+  return false;
+}
+
+
+HashTable* add_string(HashTable *h, char *str, int class){
+  LinkedList *new = malloc(sizeof *new);
+  LinkedList *current = lookup_string(h, str);
+  
+  if( counting(h, current, new, class) == true){
+    return h;
+  }
+  
+  unsigned int hashval = hash(h, str);
   new->next = h->table[hashval];
   h->table[hashval] = new;
-  h->grams_count = h->grams_count + 1.0;
+  new->string = str;
 
   if(is_too_full(h) == true){
     HashTable *new = rehash(h);

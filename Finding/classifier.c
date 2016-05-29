@@ -29,22 +29,19 @@ void get_grams(char* sentences, char* grams[]){
 
 void walk_through_train(Classifier* clf){
 
+	// make sure this acutally is the size of the training set
 	int range = clf->dictionary->size;
 
 	for (int i = 0; i < range; i++){
-		printf("%s\n", clf->train->sentences[i]);
 		
 		if (clf->train->sentences[i] != NULL){
-
 			int l = strlen(clf->train->sentences[i]);
 			int class = clf->train->labels[i];
 			char* grams[l]; /* always greater than the actual number of grams*/
 			for (int i = 0; i < l; i++){
 				grams[i] = NULL;
-				/* this for loop seems really inefficient */
 			}
 			get_grams(clf->train->sentences[i], grams);
-
 			for (int i = 0; i < l; i++){
 				char* g = grams[i];
 				if(g != NULL){
@@ -88,17 +85,15 @@ void calculate_probabilities(Classifier* clf){
 			int sum = clf->dictionary->table[i]->zero;
 			sum += clf->dictionary->table[i]->positive;
 			float add_one = (float)sum / (float)clf->all_unigrams;
-			// printf("%f\n", add_one);
+			clf->dictionary->table[i]->gram_probability = add_one;
 
 			// // P(unigram|1) : positive count for this unigram / all positive unigrams,
 			int positive_count = clf->dictionary->table[i]-> positive;
 			float add_two = (float)positive_count / (float)clf->positive_unigrams;
-
-			// // both of these lines create segmentation faults
-			clf->dictionary->table[i]->gram_probability = add_one;
 			clf->dictionary->table[i]->probability_gram_is_positive = add_two;
 		}
 	}
+	printf("%s\n", "Actually got probabilities for this many:");
 	printf("%d\n", count);
 }
 
