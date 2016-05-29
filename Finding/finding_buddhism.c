@@ -4,8 +4,6 @@
 #include "read.h"
 #include "classifier.h"
 
-
-
 // add in removal of stopwords
 
 // this whole function should take the size of the training set
@@ -13,13 +11,9 @@
 int main(){
 	TrainSet* set = get_train_set();
 	HashTable* table = create_hash_table(152); /*this breaks at any size around 200 or larger */
-	add_string(table, "adding this string", 0);
-	// lookup_string(table, "adding this string");
-	// printf("%d\n", table->new_grams_count);
 
 	Classifier* clf = classifier_init(set, table);
 
-	// walks through the hash table and calculate probabilities
 	calculate_probabilities(clf);
 
 	for (int i = 0; i<16; i++){

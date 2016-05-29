@@ -6,6 +6,8 @@ typedef struct LinkedList {
   struct LinkedList *next;
   int positive; /* running count of grams in class positive */
   int zero; /* running count of grams in class zero */
+  float gram_probability;
+  float probability_gram_is_positive;
 } LinkedList;
 
 typedef struct HashTable {
@@ -21,13 +23,5 @@ LinkedList* lookup_string(HashTable *h, char *str);
 int add_string(HashTable *h, char *str, int class);
 
 void free_table(HashTable *h);
-
-// function for rehash
-
-/* ---------------------- classifier functions ------------------------------
-
-change add string to add grams, which will also add counts
-
-calculate probabilites, which will walk through and convert counts to probabilities */
 
 #endif /* HASH_TABLES_H_ */

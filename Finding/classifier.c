@@ -60,15 +60,26 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 }
 
 void calculate_probabilities(Classifier* clf){
+	int range = clf->dictionary->size;
+	for (int i = 0; i < range; i++){
+
+		// get probability of grams
+		int sum = clf->dictionary->table[i]->zero;
+		sum += clf->dictionary->table[i]->positive;
+		clf->dictionary->table[i]->gram_probability = sum / clf->all_unigrams;
+
+		// get probability grams are positive
+		int positive_count = clf->dictionary->table[i]-> positive;
+		clf->dictionary->table[i]->probability_gram_is_positive = positive_count / clf->positive_unigrams;
+
+	}
 	/* walk through the hash map and calculate probabilities
   			{gram: gram_prob, prob_gram_positive}
-
 			P(unigram) :  0 count + 1 count / all_unigrams,
 			P(bigram) : 0 count + 1 count / all_bigrams,
 			P(unigram|1) : positive count for this unigram / all positive unigrams,
 			P(bigram|1) : positive count for this bigram / all positive bigrams}
 	*/
-	return;
 }
 
 float get_score(Classifier* clf, char* fragment){

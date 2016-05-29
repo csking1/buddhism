@@ -53,8 +53,6 @@ bool is_too_full(HashTable *h){
   return (h->grams_count / h->size) >= TOO_FULL_RATIO;
 }
 
-
-
 int transfer_values(HashTable *h, char *new_string, int positive_count, int zero_count){
   LinkedList *new;
   if ((new = malloc(sizeof(new))) == NULL){
@@ -70,7 +68,6 @@ int transfer_values(HashTable *h, char *new_string, int positive_count, int zero
   return 0;
 }
 
-
 HashTable* rehash(HashTable *h){
   int new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
@@ -80,7 +77,6 @@ HashTable* rehash(HashTable *h){
   }
   return new_table;
 }
-
 
 // wierd problem with trying to increment the grams_count integer, probably a pointer problem
 int add_string(HashTable *h, char *str, int class){
@@ -106,12 +102,13 @@ int add_string(HashTable *h, char *str, int class){
   new->string = strdup(str);
   printf("%d\n", h->grams_count);
 
-
   if (class == 0){
     new->zero = 1;
+    new->positive = 0;
   }
   else {
     new->positive = 1;
+    new->positive = 0;
   }
 
 
