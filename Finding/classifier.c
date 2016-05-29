@@ -66,12 +66,16 @@ void calculate_probabilities(Classifier* clf){
 		// get probability of grams
 		int sum = clf->dictionary->table[i]->zero;
 		sum += clf->dictionary->table[i]->positive;
-		clf->dictionary->table[i]->gram_probability = sum / clf->all_unigrams;
+		float add_one = sum / clf->all_unigrams;
 
 		// get probability grams are positive
 		int positive_count = clf->dictionary->table[i]-> positive;
-		clf->dictionary->table[i]->probability_gram_is_positive = positive_count / clf->positive_unigrams;
+		float add_two = positive_count / clf->positive_unigrams;
 
+
+		// both of these lines create segmentation faults
+		// clf->dictionary->table[i]->gram_probability = add_one;
+		// clf->dictionary->table[i]->probability_gram_is_positive = add_two;
 	}
 	/* walk through the hash map and calculate probabilities
   			{gram: gram_prob, prob_gram_positive}
