@@ -9,7 +9,7 @@ float GROWTH_RATIO = 5;
 
 // Skeleton from http://www.sparknotes.com/cs/searching/hashtables/section3/, but most is original
 
-HashTable* create_hash_table(int size){
+HashTable* create_hash_table(float size){
   HashTable *h = malloc(sizeof *h);
   if (size < 1){
     return NULL;
@@ -25,7 +25,7 @@ HashTable* create_hash_table(int size){
     h->table[i] = NULL;
   }
   h->size = size;
-  h->grams_count = 0;
+  h->grams_count = 0.0;
   return h;
 }
 
@@ -34,7 +34,10 @@ unsigned int hash(HashTable *h, char *str){
   for(; *str != '\0'; str++){
    hashval = *str + (hashval << 5) - hashval;
  }
-  return hashval % h->size;
+ float s = h-> size;
+ int resolve = hashval & (int)s;
+ // this has to return an integer
+  return resolve;
 }
 
 LinkedList *lookup_string(HashTable *h, char *str){
@@ -48,6 +51,7 @@ LinkedList *lookup_string(HashTable *h, char *str){
 }
 
 bool is_too_full(HashTable *h){
+  float compare = h->grams_count / h->size;
   return (h->grams_count / h->size) >= TOO_FULL_RATIO;
 }
 
@@ -60,14 +64,18 @@ int transfer_values(HashTable *h, char *new_string, int positive_count, int zero
   new->string = new_string;
   new->next = h->table[hashval];
   new->positive = positive_count;
+
   new->zero = zero_count;
+
   h->table[hashval] = new;
-  h->grams_count ++;
+
+  h->grams_count = h->grams_count + 1.0;
+
   return 0;
 }
 
 HashTable* rehash(HashTable *h){
-  int new_size = h->size * GROWTH_RATIO;
+  float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
   for(int i = 0; i<h->size; i++){
     char* string = h->table[i]->string;
@@ -76,7 +84,8 @@ HashTable* rehash(HashTable *h){
   return new_table;
 }
 
-int add_string(HashTable *h, char *str, int class){
+// this returns a new hash table every time because it calls rehash, which creates a new table
+HashTable* add_string(HashTable *h, char *str, int class){
   LinkedList *new = malloc(sizeof *new);
   LinkedList *current;
   unsigned int hashval = hash(h, str);
@@ -88,7 +97,7 @@ int add_string(HashTable *h, char *str, int class){
       else {
         new->positive ++;
       }
-    return 2;
+    return h;
   }
   new->string = strdup(str);
 
@@ -100,14 +109,20 @@ int add_string(HashTable *h, char *str, int class){
     new->positive = 1;
     new->positive = 0;
   }
+
   new->next = h->table[hashval];
   h->table[hashval] = new;
-  h->grams_count ++;
+  h->grams_count = h->grams_count + 1.0;
+
+  // this isn't catching it soon enough
   bool go = is_too_full(h);
+
+
   if(go == true){
-    h = rehash(h);
+    // the problem is this line right here
+    HashTable *h = rehash(h);
   }
-  return 0;
+  return h;
 }
 
 void free_table(HashTable *h){

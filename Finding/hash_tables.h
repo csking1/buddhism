@@ -11,16 +11,16 @@ typedef struct LinkedList {
 } LinkedList;
 
 typedef struct HashTable {
-  	int size;
+  	float size;
   	LinkedList **table;
-  	int grams_count;
+  	float grams_count;
 }   HashTable;
 
-HashTable* create_hash_table(int size);
+HashTable* create_hash_table(float size);
 
 LinkedList* lookup_string(HashTable *h, char *str);
 
-int add_string(HashTable *h, char *str, int class);
+HashTable* add_string(HashTable *h, char *str, int class);
 
 void free_table(HashTable *h);
 

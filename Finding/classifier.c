@@ -28,7 +28,8 @@ void get_grams(char* sentences, char* grams[]){
 }
 
 Classifier* classifier_init(TrainSet* t, HashTable* h){
-	Classifier* clf = (Classifier*)malloc(sizeof(Classifier));
+	// Classifier* clf = (Classifier*)malloc(sizeof(Classifier));
+	Classifier *clf = malloc(sizeof *clf);
 	clf->dictionary =  h;
 	clf->train = t;
 	clf->class_prob = class_probability(clf);
@@ -44,11 +45,12 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 			grams[i] = NULL;
 			/* this for loop seems really inefficient */
 		}
+		printf("%s\n", clf->train->sentences[i]);
 		get_grams(clf->train->sentences[i], grams);
 		for (int i = 0; i < l; i++){
 			char* g = grams[i];
 			if(g != NULL){
-				// add_to_hash_table(clf->dictionary, g, class) for each element in the linked list
+				clf->dictionary = add_string(clf->dictionary, g, class);
 				clf->all_unigrams++;
 				if (class == 1){
 					clf->positive_unigrams++;
