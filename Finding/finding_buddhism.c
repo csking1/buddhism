@@ -4,6 +4,9 @@
 #include "read.h"
 #include "classifier.h"
 
+
+float GROWTH_RATIO = 5;
+
 // add in removal of stopwords
 
 // this whole function should take the size of the training set

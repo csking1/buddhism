@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "hash_tables.h"
 
-/* Based on the example http://www.sparknotes.com/cs/searching/hashtables/section3/
-  With specialization for reading in grams and calculating frequencies
-  And my own rehashing function */
+float TOO_FULL_RATIO = 0.50;
+float GROWTH_RATIO = 5;
+
+/* Skeleton from http://www.sparknotes.com/cs/searching/hashtables/section3/
+  With a lot of our own specialization */
 
 HashTable* create_hash_table(int size){
   HashTable *h;
@@ -23,7 +26,7 @@ HashTable* create_hash_table(int size){
     h->table[i] = NULL;
   }
   h->size = size;
-  h->new_grams_count = 0;
+  h->grams_count = 0;
   return h;
 }
 
@@ -39,7 +42,6 @@ unsigned int hash(HashTable *h, char *str){
 LinkedList *lookup_string(HashTable *h, char *str){
   LinkedList *list;
   unsigned int hashval = hash(h, str);
-  // I don't understand the syntax here
   for (list = h->table[hashval]; list != NULL; list = list -> next){
     if (strcmp(str, list->string) == 0) return list;
   }
@@ -47,9 +49,23 @@ LinkedList *lookup_string(HashTable *h, char *str){
   return NULL;
 }
 
-// this might have to take booleans, whether or not the string is a positive, whether or not it's a unigram, and whether or not it's being used to rehash
-// if rehash == 0; increment running count for new_gram_added
-int add_string(HashTable *h, char *str, int rehash){
+bool is_too_full(HashTable *h){
+  return (h->grams_count / h->size) >= TOO_FULL_RATIO;
+}
+
+HashTable* rehash(HashTable *h){
+  int new_size = h->size * GROWTH_RATIO;
+  HashTable* new_table = create_hash_table(new_size);
+  for(int i = 0; i<h->size; i++){
+    char* string = h->table[i]->string;
+    // need to add some logic here to handle the transfer of counts as well
+    add_string(new_table, string);
+  }
+}
+
+
+// wierd problem with trying to increment the grams_count integer, probably a pointer problem
+int add_string(HashTable *h, char *str, int class){
   LinkedList *new;
   LinkedList *current;
   unsigned int hashval = hash(h, str);
@@ -58,18 +74,38 @@ int add_string(HashTable *h, char *str, int rehash){
   }
   current = lookup_string(h, str);
   if (current != NULL) {
-    // string is already in the dictionary, update the values here
+      if (class == 0){
+        new->zero ++;
+      }
+      else {
+        new->positive ++;
+      }
     return 2;
   }
-  printf("%d\n", h->new_grams_count);
+
+  // I don't know why new_grams_count jumps by a few thousand by adding a new string
+  printf("%d\n", h->grams_count);
   new->string = strdup(str);
-  printf("%d\n", h->new_grams_count);
+  printf("%d\n", h->grams_count);
+
+
+  if (class == 0){
+    new->zero = 1;
+  }
+  else {
+    new->positive = 1;
+  }
+
+
   new->next = h->table[hashval];
   h->table[hashval] = new;
-  // if function is not being used for rehashing
-  if (rehash == 0){
-    h->new_grams_count ++;
+  h->grams_count ++;
+
+  bool go = is_too_full(h);
+  if(go == true){
+    h = rehash(h);
   }
+
   return 0;
 }
 
