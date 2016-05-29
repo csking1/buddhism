@@ -65,23 +65,34 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 }
 
 void calculate_probabilities(Classifier* clf){
-	int range = clf->dictionary->size;
+
+	int range = clf->all_unigrams;
+	int count = 0;
+
 	for (int i = 0; i < range; i++){
 
-		// P(unigram) :  0 count + 1 count / all_unigrams,
-		int sum = clf->dictionary->table[i]->zero;
-		sum += clf->dictionary->table[i]->positive;
-		float add_one = sum / clf->all_unigrams;
+		if (clf->dictionary->table[i] != NULL){
+			printf("%s\n", clf->dictionary->table[i]->string);
 
-		// P(unigram|1) : positive count for this unigram / all positive unigrams,
-		int positive_count = clf->dictionary->table[i]-> positive;
-		float add_two = positive_count / clf->positive_unigrams;
+			count++;
+			// P(unigram) :  0 count + 1 count / all_unigrams,
+			int sum = clf->dictionary->table[i]->zero;
+			sum += clf->dictionary->table[i]->positive;
+			float add_one = (float)sum / (float)clf->all_unigrams;
+			// printf("%f\n", add_one);
 
-		// both of these lines create segmentation faults
-		// clf->dictionary->table[i]->gram_probability = add_one;
-		// clf->dictionary->table[i]->probability_gram_is_positive = add_two;
+			// // P(unigram|1) : positive count for this unigram / all positive unigrams,
+			int positive_count = clf->dictionary->table[i]-> positive;
+			float add_two = (float)positive_count / (float)clf->positive_unigrams;
+
+			// // both of these lines create segmentation faults
+			clf->dictionary->table[i]->gram_probability = add_one;
+			clf->dictionary->table[i]->probability_gram_is_positive = add_two;
+		}
 	}
+	printf("%d\n", count);
 }
+
 
 // takes a single sentence, returns score
 float get_score(Classifier* clf, char* fragment){
