@@ -11,13 +11,14 @@ typedef struct LinkedList {
 typedef struct HashTable {
   	int size;
   	LinkedList **table;
+  	int new_grams_count;
 }   HashTable;
 
 HashTable* create_hash_table(int size);
 
 LinkedList* lookup_string(HashTable *h, char *str);
 
-int add_string(HashTable *h, char *str);
+int add_string(HashTable *h, char *str, int rehash);
 
 void free_table(HashTable *h);
 

@@ -23,6 +23,7 @@ HashTable* create_hash_table(int size){
     h->table[i] = NULL;
   }
   h->size = size;
+  h->new_grams_count = 0;
   return h;
 }
 
@@ -46,8 +47,9 @@ LinkedList *lookup_string(HashTable *h, char *str){
   return NULL;
 }
 
-// this might have to take two booleans, whether or not the string is a positive, and whether or not it's a unigram
-int add_string(HashTable *h, char *str){
+// this might have to take booleans, whether or not the string is a positive, whether or not it's a unigram, and whether or not it's being used to rehash
+// if rehash == 0; increment running count for new_gram_added
+int add_string(HashTable *h, char *str, int rehash){
   LinkedList *new;
   LinkedList *current;
   unsigned int hashval = hash(h, str);
@@ -59,10 +61,14 @@ int add_string(HashTable *h, char *str){
     // string is already in the dictionary, update the values here
     return 2;
   }
-
   new->string = strdup(str);
   new->next = h->table[hashval];
   h->table[hashval] = new;
+
+  // if function is not being used for rehashing
+  if (rehash == 0){
+    h->new_grams_count++;
+  }
   return 0;
 }
 
