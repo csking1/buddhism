@@ -12,12 +12,9 @@ int main(){
 	TrainSet* set = get_train_set();
 	HashTable* table = create_hash_table(152); /*this breaks at any size around 200 or larger */
 
-	add_string(table, "adding this string", 0);
-
-
 	Classifier* clf = classifier_init(set, table);
 
-	calculate_probabilities(clf);
+	// calculate_probabilities(clf);
 
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg

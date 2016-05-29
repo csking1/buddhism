@@ -7,8 +7,7 @@
 float TOO_FULL_RATIO = 0.50;
 float GROWTH_RATIO = 5;
 
-/* Skeleton from http://www.sparknotes.com/cs/searching/hashtables/section3/
-  With a lot of our own specialization */
+// Skeleton from http://www.sparknotes.com/cs/searching/hashtables/section3/, but most is original
 
 HashTable* create_hash_table(int size){
   HashTable *h = malloc(sizeof *h);
@@ -101,17 +100,13 @@ int add_string(HashTable *h, char *str, int class){
     new->positive = 1;
     new->positive = 0;
   }
-
-
   new->next = h->table[hashval];
   h->table[hashval] = new;
   h->grams_count ++;
-
   bool go = is_too_full(h);
   if(go == true){
     h = rehash(h);
   }
-
   return 0;
 }
 
