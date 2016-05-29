@@ -11,13 +11,13 @@ float GROWTH_RATIO = 5;
   With a lot of our own specialization */
 
 HashTable* create_hash_table(int size){
-  HashTable *h;
+  HashTable *h = malloc(sizeof *h);
   if (size < 1){
     return NULL;
   }
-  if ((h = malloc(sizeof(h))) == NULL){
-    return NULL;
-  }
+  // if ((h = malloc(sizeof h*)) == NULL){
+  //   return NULL;
+  // }
   if ((h->table = malloc(sizeof(h->table) * size)) == NULL){
     return NULL;
   }
@@ -33,7 +33,6 @@ HashTable* create_hash_table(int size){
 unsigned int hash(HashTable *h, char *str){
   unsigned int hashval = 0;
   for(; *str != '\0'; str++){
-    // this line is a mystery
    hashval = *str + (hashval << 5) - hashval;
  }
   return hashval % h->size;
@@ -54,10 +53,10 @@ bool is_too_full(HashTable *h){
 }
 
 int transfer_values(HashTable *h, char *new_string, int positive_count, int zero_count){
-  LinkedList *new;
-  if ((new = malloc(sizeof(new))) == NULL){
-    return 1;
-  }
+  LinkedList *new = malloc(sizeof *new);
+  // if ((new = malloc(sizeof new*)) == NULL){
+  //   return 1;
+  // }
   unsigned int hashval = hash(h, new_string);
   new->string = new_string;
   new->next = h->table[hashval];
@@ -78,14 +77,10 @@ HashTable* rehash(HashTable *h){
   return new_table;
 }
 
-// wierd problem with trying to increment the grams_count integer, probably a pointer problem
 int add_string(HashTable *h, char *str, int class){
-  LinkedList *new;
+  LinkedList *new = malloc(sizeof *new);
   LinkedList *current;
   unsigned int hashval = hash(h, str);
-  if ((new = malloc(sizeof(new))) == NULL){
-    return 1;
-  }
   current = lookup_string(h, str);
   if (current != NULL) {
       if (class == 0){
@@ -96,11 +91,7 @@ int add_string(HashTable *h, char *str, int class){
       }
     return 2;
   }
-
-  // I don't know why new_grams_count jumps by a few thousand by adding a new string
-  printf("%d\n", h->grams_count);
   new->string = strdup(str);
-  printf("%d\n", h->grams_count);
 
   if (class == 0){
     new->zero = 1;
