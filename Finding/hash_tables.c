@@ -139,3 +139,19 @@ void free_table(HashTable *h){
   free(h->table);
   free(h);
 }
+
+float get_gram_probability(HashTable *h, char* str){
+  LinkedList *rt = lookup_string(h, str);
+  if (rt == NULL){
+    return 0.0;
+  }
+  return rt->gram_probability;
+}
+
+float get_probability_gram_is_positive(HashTable *h, char *str){
+    LinkedList *rt = lookup_string(h, str);
+    if (rt == NULL){
+      return 0.0;
+    }
+    return rt->probability_gram_is_positive;
+}

@@ -24,4 +24,8 @@ int add_string(HashTable *h, char *str, int class);
 
 void free_table(HashTable *h);
 
+float get_gram_probability(HashTable *h, char* str);
+
+float get_probability_gram_is_positive(HashTable *h, char *str);
+
 #endif /* HASH_TABLES_H_ */

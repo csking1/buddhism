@@ -63,39 +63,47 @@ void calculate_probabilities(Classifier* clf){
 	int range = clf->dictionary->size;
 	for (int i = 0; i < range; i++){
 
-		// get probability of grams
+		// P(unigram) :  0 count + 1 count / all_unigrams,
 		int sum = clf->dictionary->table[i]->zero;
 		sum += clf->dictionary->table[i]->positive;
 		float add_one = sum / clf->all_unigrams;
 
-		// get probability grams are positive
+		// P(unigram|1) : positive count for this unigram / all positive unigrams,
 		int positive_count = clf->dictionary->table[i]-> positive;
 		float add_two = positive_count / clf->positive_unigrams;
-
 
 		// both of these lines create segmentation faults
 		// clf->dictionary->table[i]->gram_probability = add_one;
 		// clf->dictionary->table[i]->probability_gram_is_positive = add_two;
 	}
-	/* walk through the hash map and calculate probabilities
-  			{gram: gram_prob, prob_gram_positive}
-			P(unigram) :  0 count + 1 count / all_unigrams,
-			P(bigram) : 0 count + 1 count / all_bigrams,
-			P(unigram|1) : positive count for this unigram / all positive unigrams,
-			P(bigram|1) : positive count for this bigram / all positive bigrams}
-	*/
 }
 
+// takes a single sentence, returns score
 float get_score(Classifier* clf, char* fragment){
-	//char* grams = get_grams(fragment);
+	int l = strlen(fragment);
+	char* grams[l];
+	get_grams(fragment, grams);
+	int length = 0;
+	float score = 0.0;
 
-	// for g in grams:
-		// numerator = 1 + prob_gram_positive * class_prob
+	for (int i = 0; i < l; i++){
+		float num = 1.0;
+		float denom = 1.0;
+		char* g = grams[i];
 
-		// denominator = 1 + gram_prob
+		if (g != NULL){
+			length++;
+			float gp = get_gram_probability(clf->dictionary, g);
+			float pp = get_probability_gram_is_positive(clf->dictionary, g);
 
-		// score +=  numerator / denominator
-	// score = score / length(grams)
+			// numerator = 1 + prob_gram_positive * class_prob
+			num += pp * clf->class_prob;
 
+			// denominator = 1 + gram_prob
+			denom += gp;
+			score += num / denom;
+		}
+		return score / length;
+	}
 	return 0.0;
 }
