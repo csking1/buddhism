@@ -3,12 +3,14 @@
 #include <string.h>
 #include "read.h"
 
+int SIZE_R = 50;
+
 TrainSet* get_train_set(){
    TrainSet* t = (TrainSet*)malloc(sizeof(TrainSet));
    FILE *fp;
    char line[300]; /* 300 is an arbitrary length to read in lines from the text file*/
    int count = 0;
-   fp = fopen("Data/training.txt" , "r");
+   fp = fopen("Data/mini.txt" , "r");
 
    if(fp == NULL){
       perror("Error opening file");
@@ -30,7 +32,7 @@ TrainSet* get_train_set(){
 }
 
 void* print_quotes(TrainSet* t){
-   for (int i=0; i<152; i++){
+   for (int i=0; i<SIZE_R; i++){
       printf("%s\n", t-> sentences[i]);
    }
    return NULL;
