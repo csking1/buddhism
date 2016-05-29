@@ -64,13 +64,13 @@ void calculate_probabilities(Classifier* clf){
 	for (int i = 0; i < range; i++){
 
 		// P(unigram) :  0 count + 1 count / all_unigrams,
-		// int sum = clf->dictionary->table[i]->zero;
-		// sum += clf->dictionary->table[i]->positive;
-		// float add_one = sum / clf->all_unigrams;
+		int sum = clf->dictionary->table[i]->zero;
+		sum += clf->dictionary->table[i]->positive;
+		float add_one = sum / clf->all_unigrams;
 
 		// P(unigram|1) : positive count for this unigram / all positive unigrams,
-		// int positive_count = clf->dictionary->table[i]-> positive;
-		// float add_two = positive_count / clf->positive_unigrams;
+		int positive_count = clf->dictionary->table[i]-> positive;
+		float add_two = positive_count / clf->positive_unigrams;
 
 		// both of these lines create segmentation faults
 		// clf->dictionary->table[i]->gram_probability = add_one;

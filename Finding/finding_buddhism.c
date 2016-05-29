@@ -10,14 +10,31 @@
 
 int main(){
 	TrainSet* set = get_train_set();
-	HashTable* table = create_hash_table(152); /*this breaks at any size around 200 or larger */
+	HashTable* table = create_hash_table(1); /*this breaks at any size around 200 or larger */
 
-	add_string(table, "adding this string", 0);
-
+	add_string(table, "a", 0);
+	add_string(table, "b", 0);
+	add_string(table, "c", 0);
+	add_string(table, "d", 0);
+	add_string(table, "e", 0);
+	add_string(table, "f", 0);
+	add_string(table, "g", 0);
+	add_string(table, "h", 0);
+	add_string(table, "i", 0);
+	add_string(table, "j", 0);
+	add_string(table, "k", 0);
+	add_string(table, "l", 0);
+	add_string(table, "m", 0);
+	add_string(table, "n", 0);
+	add_string(table, "o", 0);
+	LinkedList* got = lookup_string(table, "o");
+	printf("%s\n", got->string);
+	got = lookup_string(table, "a");
+	printf("%s\n", got->string);
 
 	Classifier* clf = classifier_init(set, table);
 
-	calculate_probabilities(clf);
+	// calculate_probabilities(clf);
 
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg
