@@ -79,12 +79,8 @@ HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
 
-  // the hash table isn't full, so it's grabbing the string of a null value
   for(int i = 0; i<h->size; i++){
-
-    // add an indicator for yes there is a string here
     if (h->table[i] != NULL){
-      printf("%s\n", "check for string logic worked");
       char* string = h->table[i]->string;
       transfer_values(new_table, string, h->table[i]->positive, h->table[i]->zero);
     }
@@ -124,6 +120,7 @@ HashTable* add_string(HashTable *h, char *str, int class){
   if(is_too_full(h) == true){
     // the problem is this line right here
     HashTable *new = rehash(h);
+    printf("%s\n", "rehashed finished");
     return new;
   }
   return h;

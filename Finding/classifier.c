@@ -38,21 +38,32 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 
 	// Walk through the training set, tokenize each line, add to hash table and increment counts
 	for (int i = 0; i < h->size; i++){
-		int l = strlen(clf->train->sentences[i]);
-		int class = clf->train->labels[i];
-		char* grams[l]; /* always greater than the actual number of grams*/
-		for (int i = 0; i < l; i++){
-			grams[i] = NULL;
-			/* this for loop seems really inefficient */
-		}
-		get_grams(clf->train->sentences[i], grams);
-		for (int i = 0; i < l; i++){
-			char* g = grams[i];
-			if(g != NULL){
-				clf->dictionary = add_string(clf->dictionary, g, class);
-				clf->all_unigrams++;
-				if (class == 1){
-					clf->positive_unigrams++;
+
+		if (clf->train->sentences[i] != NULL){
+			printf("%s\n", clf->train->sentences[i]);
+			printf("%s\n", "starting with another sentence");
+
+			int l = strlen(clf->train->sentences[i]);
+			printf("%s\n", "got the length of the sentences");
+
+			int class = clf->train->labels[i];
+			char* grams[l]; /* always greater than the actual number of grams*/
+			for (int i = 0; i < l; i++){
+				grams[i] = NULL;
+				/* this for loop seems really inefficient */
+			}
+
+			get_grams(clf->train->sentences[i], grams);
+
+			for (int i = 0; i < l; i++){
+				char* g = grams[i];
+				if(g != NULL){
+					HashTable *n = add_string(clf->dictionary, g, class);
+					clf->dictionary = n;
+					clf->all_unigrams++;
+					if (class == 1){
+						clf->positive_unigrams++;
+					}
 				}
 			}
 		}
