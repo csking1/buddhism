@@ -5,9 +5,9 @@
 #include "hash_tables.h"
 
 float TOO_FULL_RATIO = 0.50;
-float GROWTH_RATIO = 4;
+float GROWTH_RATIO = 2;
 
-// Skeleton from sparknotes, but most is original
+// Skeleton code is from sparknotes, but most is original
 
 HashTable* create_hash_table(float size){
   HashTable *h = malloc(sizeof *h);
@@ -58,8 +58,10 @@ int transfer_values(HashTable *h, char *new_string, int positive_count, int zero
 }
 
 HashTable* rehash(HashTable *h){
+  printf("%s\n", "rehashing right now");
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
+  new_table->grams_count = h->grams_count;
 
   // walk through existing hash table and transfer values to new table
   int range = h->grams_count;
@@ -109,7 +111,6 @@ HashTable* add_to_hash_table(HashTable* h, char* str, LinkedList* new){
   }
   return h;
 }
-
 
 HashTable* add_string(HashTable *h, char *str, int class){
   LinkedList *new = malloc(sizeof *new);
