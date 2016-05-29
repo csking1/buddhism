@@ -23,18 +23,20 @@ def go(key, query):
     Calls parse_to_csv to grab important information out of each inner dictionary
     '''
     keywords_list= []
+    dates = []
 
     try:
         json_dict = make_connection(key, query)
         articles = json_dict["response"]["docs"]
         for each in articles:
             date = each["pub_date"]
+            dates.append(date)
             keywords = each["keywords"]
             for each in keywords:
                 keywords_list.append(each["value"])
     except:
         print("Connection Failed")
-    return keywords_list
+    return keywords_list, dates
 
     ##################Below code for storing results of query into CSVs##########
 
