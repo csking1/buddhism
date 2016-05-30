@@ -36,7 +36,8 @@ unsigned int hash(HashTable *h, char *str){
 LinkedList *lookup_string(HashTable *h, char *str){
   LinkedList *list;
   unsigned int hashval = hash(h, str);
-  // does this need to check the begining of the list as well? probably, unless the linked list knows to check the begining
+  // does this need to check the begining of the list as well?
+  // probably, unless the linked list knows to check the begining
   for (list = h->table[hashval]; list != NULL; list = list -> next){
     if (strcmp(str, list->string) == 0) return list;
   }
@@ -70,29 +71,19 @@ void add_to_table(HashTable *h, char* str, LinkedList* new){
   }
 }
 
-void transfer_values(HashTable *h, char *new_string, int positive_count, int zero_count){
-  LinkedList *new = malloc(sizeof *new);
-  new->positive = positive_count;
-  new->zero = zero_count;
-  add_to_table(h, new_string, new);
-}
 
 HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
   new_table->grams_count = h->grams_count;
-  printf("%s\n", "transferring a grams count of :");
-  printf("%f\n", new_table->grams_count);
 
   // walk through old hash table and transfer values to new table
-  int old_size = h->size;
-  printf("%s\n", "transfering values values");
-  for(int i = 0; i < old_size; i++){
-
+  for(int i = 0; i < h->size; i++){
     if (h->table[i] != NULL){
-      printf("%d\n", i);
-      char* string = h->table[i]->string;
-      transfer_values(new_table, string, h->table[i]->positive, h->table[i]->zero);
+      LinkedList *new = malloc(sizeof *new);
+      new->positive = h->table[i]->positive;
+      new->zero = h->table[i]->zero;
+      add_to_table(h, h->table[i]->string, new);
     }
   }
   return new_table;
@@ -119,8 +110,6 @@ bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
   }
   return false;
 }
-
-
 
 HashTable* add_string(HashTable *h, char *str, int class){
   LinkedList *new = malloc(sizeof *new);
