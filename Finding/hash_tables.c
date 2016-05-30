@@ -7,7 +7,8 @@
 float TOO_FULL_RATIO = 0.50;
 float GROWTH_RATIO = 2;
 
-// Skeleton code is from sparknotes, but most is original
+// The skeleton from sparknotes turned out to be buggy and not very useful, so most of this code is original
+// I think I'm not capturing some of the functionality of linked lists
 
 HashTable* create_hash_table(float size){
   HashTable *h = malloc(sizeof *h);
@@ -34,7 +35,7 @@ unsigned int hash(HashTable *h, char *str){
 LinkedList *lookup_string(HashTable *h, char *str){
   LinkedList *list;
   unsigned int hashval = hash(h, str);
-  // does this need to check the begining of the list as well?
+  // does this need to check the begining of the list as well? probably, unless the linked list knows to check the begining
   for (list = h->table[hashval]; list != NULL; list = list -> next){
     if (strcmp(str, list->string) == 0) return list;
   }
@@ -45,16 +46,34 @@ bool is_too_full(HashTable *h){
   return (h->grams_count / h->size) >= TOO_FULL_RATIO;
 }
 
-// make sure this is doing what you think it should be doing, especially the adding to table logic
-int transfer_values(HashTable *h, char *new_string, int positive_count, int zero_count){
+void add_to_table(HashTable *h, char* str, LinkedList* new){
+  unsigned int hashval = hash(h, str);
+
+  // walk through the table and check for the first free spot, start at hash val and go to the top
+  for (int i = hashval; i<h->size; i++){
+    if (h->table[i] == NULL){
+        new->next = h->table[i];
+        h->table[i] = new;
+        new->string = str;
+        return;
+    }
+  }
+  // start at the bottom of the table, check for the first free spot up to hash val, then return
+  for (int i = hashval; i < hashval; i++){
+    if (h->table[i] == NULL){
+        new->next = h->table[i];
+        h->table[i] = new;
+        new->string = str;
+        return;
+    }
+  }
+}
+
+void transfer_values(HashTable *h, char *new_string, int positive_count, int zero_count){
   LinkedList *new = malloc(sizeof *new);
-  unsigned int hashval = hash(h, new_string);
-  new->string = new_string;
-  new->next = h->table[hashval];
   new->positive = positive_count;
   new->zero = zero_count;
-  h->table[hashval] = new;
-  return 0;
+  add_to_table(h, new_string, new);
 }
 
 HashTable* rehash(HashTable *h){
@@ -100,25 +119,20 @@ bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
   return false;
 }
 
+
+
 HashTable* add_string(HashTable *h, char *str, int class){
   LinkedList *new = malloc(sizeof *new);
   LinkedList *current = lookup_string(h, str);
   if(counting(h, current, new, class) == true){
-    // found existing string, increment counts and return
     return h;
   }
   // add a new string
   h->grams_count ++;
-  unsigned int hashval = hash(h, str);
-  printf("%s\n", "hashing to an index of");
-  printf("%d\n", hashval);
-  printf("%s\n", str);
-  new->next = h->table[hashval];
-  h->table[hashval] = new;
-  new->string = str;
+  add_to_table(h, str, new);
   if(is_too_full(h) == true){
-    HashTable *new = rehash(h);
-    return new;
+    HashTable *t = rehash(h);
+    return t;
   }
   return h;
 }
