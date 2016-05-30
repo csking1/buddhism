@@ -89,7 +89,6 @@ void calculate_probabilities(Classifier* clf){
 	printf("%d\n", count);
 }
 
-// takes a single sentence, returns score
 float get_score(Classifier* clf, char* fragment){
 	int l = strlen(fragment);
 	char* grams[l];

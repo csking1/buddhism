@@ -9,17 +9,17 @@
 int main(){
 	int range = 152; // size of the training set
 	TrainSet* set = get_train_set();
-	for (int i = 0; i < range; i++){
-		printf("%d\n", set->labels[i]);
-	}
 	HashTable* table = create_hash_table(range);
 	Classifier* clf = classifier_init(set, table);
 	walk_through_train(clf, range);
 	calculate_probabilities(clf);
 
+	TrainSet* test = get_train_set();
 	for (int i = 0; i < range; i++){
-		float score = get_score(clf, set->sentences[i]);
-		printf("%d\n", i);
+		if (test->sentences[i] != NULL){
+			float score = get_score(clf, test->sentences[i]);
+			printf("%f\n", score);
+		}
 	}
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg
