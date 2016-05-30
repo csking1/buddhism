@@ -59,7 +59,7 @@ void add_to_table(HashTable *h, char* str, LinkedList* new){
     }
   }
   // start at the bottom of the table, check for the first free spot up to hash val, then return
-  for (int i = hashval; i < hashval; i++){
+  for (int i = 0; i < hashval; i++){
     if (h->table[i] == NULL){
         new->next = h->table[i];
         h->table[i] = new;
