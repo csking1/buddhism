@@ -33,7 +33,7 @@ unsigned int hash(HashTable *h, char *str){
 LinkedList *lookup_string(HashTable *h, char *str){
   LinkedList *list;
   unsigned int hashval = hash(h, str);
-  // does this need to check the begining of the list as well? 
+  // does this need to check the begining of the list as well?
   for (list = h->table[hashval]; list != NULL; list = list -> next){
     if (strcmp(str, list->string) == 0) return list;
   }
@@ -53,20 +53,16 @@ int transfer_values(HashTable *h, char *new_string, int positive_count, int zero
   new->positive = positive_count;
   new->zero = zero_count;
   h->table[hashval] = new;
-  h->grams_count = h->grams_count + 1.0;
   return 0;
 }
 
 HashTable* rehash(HashTable *h){
-  printf("%s\n", "rehashing right now");
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
   new_table->grams_count = h->grams_count;
-  printf("%s\n", "grams count is");
-  printf("%f\n", h->grams_count);
 
   // walk through existing hash table and transfer values to new table
-  int range = h->grams_count;
+  int range = h->size;
   for(int i = 0; i < range; i++){
     if (h->table[i] != NULL){
       char* string = h->table[i]->string;
@@ -77,7 +73,7 @@ HashTable* rehash(HashTable *h){
 }
 
 bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
-  /* Returns true if the string is already in the table, 
+  /* Returns true if the string is already in the table,
   Increments counting either way */
   if (current != NULL) {
       if (class == 0){
@@ -88,7 +84,8 @@ bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
       }
     return true;
   }
-  h->grams_count = h->grams_count + 1.0;
+  h->grams_count ++;
+  printf("%f\n", h->grams_count);
   if (class == 0){
     new->zero = 1;
     new->positive = 0;

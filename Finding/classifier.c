@@ -30,7 +30,6 @@ void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
 	get_grams(quote, grams);
 	for (int i = 0; i < l; i++){
 		if (grams[i] != NULL){
-			printf("%s\n", grams[i]);
 			HashTable *n = add_string(clf->dictionary, grams[i], class);
 			clf->dictionary = n;
 			clf->all_unigrams++;
@@ -41,7 +40,6 @@ void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
 
 void walk_through_train(Classifier* clf){
 
-	// make sure this acutally is the size of the training set
 	int range = clf->dictionary->size;
 	for (int i = 0; i < range; i++){
 		char* quote = clf->train->sentences[i];
@@ -51,8 +49,8 @@ void walk_through_train(Classifier* clf){
 			char* grams[l]; /* always greater than the actual number of grams*/
 			for (int i = 0; i < l; i++){
 				grams[i] = NULL;
-			}	
-			add_grams(clf, grams, quote, l, class);	
+			}
+			add_grams(clf, grams, quote, l, class);
 		}
 	}
 }
@@ -71,18 +69,18 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 void calculate_probabilities(Classifier* clf){
 
 	int range = clf->dictionary->size;
-	printf("%s\n", "size of dictionary is");
-	printf("%d\n",  range);
+	printf("%s\n", "grams count is");
+	printf("%f\n", clf->dictionary->grams_count);
 
-	printf("%s\n", "Should be calculating probabilities for this many unigrams: ");
-	printf("%d\n", clf->all_unigrams);
+	printf("%s\n", "dictionary is");
+	printf("%d\n", range);
 	int count = 0;
-	
+
 	for (int i = 0; i < range; i++){
 
 		if (clf->dictionary->table[i] != NULL){
 			count++;
-			
+
 			// P(unigram) :  0 count + 1 count / all_unigrams,
 			int sum = clf->dictionary->table[i]->zero;
 			sum += clf->dictionary->table[i]->positive;
