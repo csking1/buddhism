@@ -24,4 +24,6 @@ void calculate_probabilities(Classifier* clf);
 
 float get_score(Classifier* clf, char* fragment);
 
+void walk_through_train(Classifier *clf, int range);
+
 #endif /* CLASSIFIER_H_ */

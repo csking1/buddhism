@@ -6,22 +6,17 @@
 
 // add in removal of stopwords
 
-// this whole function should take the size of the training set
-
 int main(){
+	int range = 5; // size of the training set
 	TrainSet* set = get_train_set();
-	HashTable* table = create_hash_table(5.0); /*this breaks at any size around 200 or larger, must take a float */
-
+	HashTable* table = create_hash_table(range);
 	Classifier* clf = classifier_init(set, table);
-
-	// this is really wrong
+	walk_through_train(clf, range);
 	calculate_probabilities(clf);
-
 	for (int i = 0; i < 50; i++){
-		float score = get_score(clf, set->sentences[i]);
-		printf("%f\n", score);
+		// float score = get_score(clf, set->sentences[i]);
+		// printf("%f\n", score);
 	}
-
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg
 		// create a classifier

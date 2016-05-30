@@ -22,6 +22,7 @@ HashTable* create_hash_table(float size){
   return h;
 }
 
+// this function sends different strings to the same hash value
 unsigned int hash(HashTable *h, char *str){
   unsigned int hashval = 0;
   for(; *str != '\0'; str++){
@@ -60,11 +61,16 @@ HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
   new_table->grams_count = h->grams_count;
+  printf("%s\n", "transferring a grams count of :");
+  printf("%f\n", new_table->grams_count);
 
-  // walk through existing hash table and transfer values to new table
-  int range = h->size;
-  for(int i = 0; i < range; i++){
+  // walk through old hash table and transfer values to new table
+  int old_size = h->size;
+  printf("%s\n", "transfering values values");
+  for(int i = 0; i < old_size; i++){
+
     if (h->table[i] != NULL){
+      printf("%d\n", i);
       char* string = h->table[i]->string;
       transfer_values(new_table, string, h->table[i]->positive, h->table[i]->zero);
     }
@@ -73,8 +79,7 @@ HashTable* rehash(HashTable *h){
 }
 
 bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
-  /* Returns true if the string is already in the table,
-  Increments counting either way */
+  /* Returns true if the string is already in the table, increments counting either way */
   if (current != NULL) {
       if (class == 0){
         current->zero ++;
@@ -84,8 +89,6 @@ bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
       }
     return true;
   }
-  h->grams_count ++;
-  printf("%f\n", h->grams_count);
   if (class == 0){
     new->zero = 1;
     new->positive = 0;
@@ -97,8 +100,19 @@ bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
   return false;
 }
 
-HashTable* add_to_hash_table(HashTable* h, char* str, LinkedList* new){
+HashTable* add_string(HashTable *h, char *str, int class){
+  LinkedList *new = malloc(sizeof *new);
+  LinkedList *current = lookup_string(h, str);
+  if(counting(h, current, new, class) == true){
+    // found existing string, increment counts and return
+    return h;
+  }
+  // add a new string
+  h->grams_count ++;
   unsigned int hashval = hash(h, str);
+  printf("%s\n", "hashing to an index of");
+  printf("%d\n", hashval);
+  printf("%s\n", str);
   new->next = h->table[hashval];
   h->table[hashval] = new;
   new->string = str;
@@ -107,16 +121,6 @@ HashTable* add_to_hash_table(HashTable* h, char* str, LinkedList* new){
     return new;
   }
   return h;
-}
-
-HashTable* add_string(HashTable *h, char *str, int class){
-  LinkedList *new = malloc(sizeof *new);
-  LinkedList *current = lookup_string(h, str);
-  if(counting(h, current, new, class) == true){
-    return h;
-  }
-  HashTable* rt = add_to_hash_table(h, str, new);
-  return rt;
 }
 
 float get_gram_probability(HashTable *h, char* str){

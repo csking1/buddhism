@@ -16,7 +16,7 @@ float class_probability(Classifier* clf){
 }
 
 void get_grams(char* sentences, char* grams[]){
-	// populates the grams with words from the sentence
+	// Is given an empty char* grams, populates it with words from the sentence
 	int count = 0;
 	char* words = strtok(sentences, " ");
 	while (words != NULL){
@@ -38,19 +38,17 @@ void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
 	}
 }
 
-void walk_through_train(Classifier* clf){
-
-	int range = clf->dictionary->size;
+void walk_through_train(Classifier* clf, int range){
 	for (int i = 0; i < range; i++){
 		char* quote = clf->train->sentences[i];
 		if (quote != NULL){
-			int l = strlen(quote);
+			int length = strlen(quote);
 			int class = clf->train->labels[i];
-			char* grams[l]; /* always greater than the actual number of grams*/
-			for (int i = 0; i < l; i++){
+			char* grams[length]; /* always greater than the actual number of grams*/
+			for (int i = 0; i < length; i++){
 				grams[i] = NULL;
 			}
-			add_grams(clf, grams, quote, l, class);
+			add_grams(clf, grams, quote, length, class);
 		}
 	}
 }
@@ -62,18 +60,17 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 	clf->class_prob = class_probability(clf);
 	clf->all_unigrams = 0;
 	clf->positive_unigrams = 0;
-	walk_through_train(clf);
 	return clf;
 }
 
 void calculate_probabilities(Classifier* clf){
 
 	int range = clf->dictionary->size;
-	printf("%s\n", "grams count is");
-	printf("%f\n", clf->dictionary->grams_count);
+	// printf("%s\n", "grams count is");
+	// printf("%f\n", clf->dictionary->grams_count);
 
-	printf("%s\n", "dictionary is");
-	printf("%d\n", range);
+	// printf("%s\n", "dictionary is");
+	// printf("%d\n", range);
 	int count = 0;
 
 	for (int i = 0; i < range; i++){
@@ -94,8 +91,8 @@ void calculate_probabilities(Classifier* clf){
 		}
 	}
 
-	printf("%s\n", "Actually got probabilities for this many:");
-	printf("%d\n", count);
+	// printf("%s\n", "Actually got probabilities for this many:");
+	// printf("%d\n", count);
 }
 
 // takes a single sentence, returns score
