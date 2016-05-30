@@ -66,11 +66,9 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 void calculate_probabilities(Classifier* clf){
 
 	int range = clf->dictionary->size;
-	// printf("%s\n", "grams count is");
-	// printf("%f\n", clf->dictionary->grams_count);
+	printf("%s\n", "grams count is");
+	printf("%f\n", clf->dictionary->grams_count);
 
-	// printf("%s\n", "dictionary is");
-	// printf("%d\n", range);
 	int count = 0;
 
 	for (int i = 0; i < range; i++){
@@ -91,8 +89,8 @@ void calculate_probabilities(Classifier* clf){
 		}
 	}
 
-	// printf("%s\n", "Actually got probabilities for this many:");
-	// printf("%d\n", count);
+	printf("%s\n", "Actually got probabilities for this many:");
+	printf("%d\n", count);
 }
 
 // takes a single sentence, returns score

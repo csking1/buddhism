@@ -7,7 +7,8 @@
 float TOO_FULL_RATIO = 0.50;
 float GROWTH_RATIO = 2;
 
-// The skeleton from sparknotes turned out to be buggy and not very useful, so most of this code is original
+// The skeleton from sparknotes turned out to be buggy and not very useful, so most of this code is original.
+// Lesson: don't trust sparknotes. Sometimes what you find online is barely useful. 8 hours later.
 // I think I'm not capturing some of the functionality of linked lists
 
 HashTable* create_hash_table(float size){
