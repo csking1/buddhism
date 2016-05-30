@@ -10,11 +10,17 @@
  
 int main(){
 	TrainSet* set = get_train_set();
-	HashTable* table = create_hash_table(5.0); /*this breaks at any size around 200 or larger, must take a float */ 
+	HashTable* table = create_hash_table(50.0); /*this breaks at any size around 200 or larger, must take a float */ 
 
 	Classifier* clf = classifier_init(set, table);
 
+	// this is really wrong
 	calculate_probabilities(clf);
+
+	for (int i = 0; i < 50; i++){
+		float score = get_score(clf, set->sentences[i]);
+		printf("%f\n", score);
+	}
 
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg

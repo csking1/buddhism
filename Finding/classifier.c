@@ -71,6 +71,8 @@ Classifier* classifier_init(TrainSet* t, HashTable* h){
 void calculate_probabilities(Classifier* clf){
 
 	int range = clf->dictionary->size;
+	printf("%s\n", "size of dictionary is");
+	printf("%d\n",  range);
 
 	printf("%s\n", "Should be calculating probabilities for this many unigrams: ");
 	printf("%d\n", clf->all_unigrams);
@@ -79,8 +81,8 @@ void calculate_probabilities(Classifier* clf){
 	for (int i = 0; i < range; i++){
 
 		if (clf->dictionary->table[i] != NULL){
-			printf("%s\n", clf->dictionary->table[i]->string);
 			count++;
+			
 			// P(unigram) :  0 count + 1 count / all_unigrams,
 			int sum = clf->dictionary->table[i]->zero;
 			sum += clf->dictionary->table[i]->positive;

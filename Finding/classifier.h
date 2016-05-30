@@ -22,4 +22,6 @@ void get_grams(char* sentence, char* grams[]);
 
 void calculate_probabilities(Classifier* clf);
 
+float get_score(Classifier* clf, char* fragment);
+
 #endif /* CLASSIFIER_H_ */

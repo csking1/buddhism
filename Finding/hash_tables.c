@@ -62,6 +62,8 @@ HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
   new_table->grams_count = h->grams_count;
+  printf("%s\n", "grams count is");
+  printf("%f\n", h->grams_count);
 
   // walk through existing hash table and transfer values to new table
   int range = h->grams_count;
@@ -99,12 +101,10 @@ bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
 }
 
 HashTable* add_to_hash_table(HashTable* h, char* str, LinkedList* new){
-
   unsigned int hashval = hash(h, str);
   new->next = h->table[hashval];
   h->table[hashval] = new;
   new->string = str;
-
   if(is_too_full(h) == true){
     HashTable *new = rehash(h);
     return new;
