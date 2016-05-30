@@ -24,7 +24,6 @@ HashTable* create_hash_table(float size){
   return h;
 }
 
-// this function sends different strings to the same hash value
 unsigned int hash(HashTable *h, char *str){
   unsigned int hashval = 0;
   for(; *str != '\0'; str++){
@@ -36,11 +35,24 @@ unsigned int hash(HashTable *h, char *str){
 LinkedList *lookup_string(HashTable *h, char *str){
   LinkedList *list;
   unsigned int hashval = hash(h, str);
-  // does this need to check the begining of the list as well?
-  // probably, unless the linked list knows to check the begining
-  for (list = h->table[hashval]; list != NULL; list = list -> next){
-    if (strcmp(str, list->string) == 0) return list;
+  for (int i = hashval; i < h->size; i++){
+    list = h->table[i];
+    if (list != NULL){
+      if (strcmp(str, list->string) == 0){
+        return list;
+      }
+    }
   }
+
+  for (int i = 0; i < hashval; i++){
+    list = h->table[i];
+    if (list != NULL){
+      if (strcmp(str, list->string) == 0){
+        return list;
+      }
+    }
+  }
+
   return NULL;
 }
 
@@ -54,38 +66,49 @@ void add_to_table(HashTable *h, char* str, LinkedList* new){
   // walk through the table and check for the first free spot, start at hash val and go to the top
   for (int i = hashval; i<h->size; i++){
     if (h->table[i] == NULL){
+        printf("%s\n", "found an empty spot");
         new->next = h->table[i];
         h->table[i] = new;
         new->string = str;
         return;
+        printf("%s\n", "but not returning");
     }
   }
   // start at the bottom of the table, check for the first free spot up to hash val, then return
   for (int i = 0; i < hashval; i++){
     if (h->table[i] == NULL){
+        printf("%s\n", "looking in the lower part");
         new->next = h->table[i];
         h->table[i] = new;
         new->string = str;
         return;
+        printf("%s\n", "but not returning");
     }
   }
 }
-
 
 HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
   new_table->grams_count = h->grams_count;
+  printf("%s\n", "grams count is");
+  printf("%f\n", h->grams_count);
+  printf("%s\n", "table size is");
+  printf("%f\n", h->size);
 
+  int count = 0;
   // walk through old hash table and transfer values to new table
   for(int i = 0; i < h->size; i++){
     if (h->table[i] != NULL){
+      count++;
       LinkedList *new = malloc(sizeof *new);
       new->positive = h->table[i]->positive;
       new->zero = h->table[i]->zero;
       add_to_table(h, h->table[i]->string, new);
     }
   }
+  printf("%s\n", "actually transferred this many: ");
+  printf("%d\n", count);
   return new_table;
 }
 
@@ -117,7 +140,6 @@ HashTable* add_string(HashTable *h, char *str, int class){
   if(counting(h, current, new, class) == true){
     return h;
   }
-  // add a new string
   h->grams_count ++;
   add_to_table(h, str, new);
   if(is_too_full(h) == true){
