@@ -66,23 +66,19 @@ void add_to_table(HashTable *h, char* str, LinkedList* new){
   // walk through the table and check for the first free spot, start at hash val and go to the top
   for (int i = hashval; i<h->size; i++){
     if (h->table[i] == NULL){
-        printf("%s\n", "found an empty spot");
         new->next = h->table[i];
         h->table[i] = new;
         new->string = str;
         return;
-        printf("%s\n", "but not returning");
     }
   }
   // start at the bottom of the table, check for the first free spot up to hash val, then return
   for (int i = 0; i < hashval; i++){
     if (h->table[i] == NULL){
-        printf("%s\n", "looking in the lower part");
         new->next = h->table[i];
         h->table[i] = new;
         new->string = str;
         return;
-        printf("%s\n", "but not returning");
     }
   }
 }
@@ -93,8 +89,6 @@ HashTable* rehash(HashTable *h){
   new_table->grams_count = h->grams_count;
   printf("%s\n", "grams count is");
   printf("%f\n", h->grams_count);
-  printf("%s\n", "table size is");
-  printf("%f\n", h->size);
 
   int count = 0;
   // walk through old hash table and transfer values to new table
@@ -104,6 +98,7 @@ HashTable* rehash(HashTable *h){
       LinkedList *new = malloc(sizeof *new);
       new->positive = h->table[i]->positive;
       new->zero = h->table[i]->zero;
+      printf("%s\n", h->table[i]->string);
       add_to_table(h, h->table[i]->string, new);
     }
   }

@@ -18,7 +18,7 @@ int main(){
 	for (int i = 0; i < range; i++){
 		if (test->sentences[i] != NULL){
 			float score = get_score(clf, test->sentences[i]);
-			// printf("%f\n", score);
+			printf("%f\n", score);
 		}
 	}
 	for (int i = 0; i<16; i++){
