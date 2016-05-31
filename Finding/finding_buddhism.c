@@ -8,7 +8,7 @@
 // add in removal of stopwords
 
 int main(){
-	int range = 5; // size of the training set
+	int range = 152; // size of the training set
 	TrainSet* train = get_train_set();
 	HashTable* table = create_hash_table(range);
 	StopWords* stop = get_stopwords();
@@ -16,13 +16,13 @@ int main(){
 	walk_through_train(clf, range);
 	calculate_probabilities(clf);
 
-	// TrainSet* test = get_train_set();
-	// for (int i = 0; i < range; i++){
-	// 	if (test->sentences[i] != NULL){
-	// 		float score = get_score(clf, test->sentences[i]);
-	// 		printf("%f\n", score);
-	// 	}
-	// }
+	TrainSet* test = get_train_set();
+	for (int i = 0; i < range; i++){
+		if (test->sentences[i] != NULL){
+			float score = get_score(clf, test->sentences[i]);
+			printf("%f\n", score);
+		}
+	}
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg
 		// create a classifier
