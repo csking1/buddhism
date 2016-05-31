@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 typedef struct TrainSet {
-	char* sentences[152];
-	int labels[152];
+	char* sentences[5];
+	int labels[5];
 } TrainSet;
 
 TrainSet* get_train_set();

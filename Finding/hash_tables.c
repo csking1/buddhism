@@ -94,23 +94,15 @@ void add_to_table(HashTable *h, char* str, LinkedList* new){
 HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
-  new_table->grams_count = h->grams_count;
-  printf("%s\n", "grams count is");
-  printf("%f\n", h->grams_count);
-
-  int count = 0;
   // walk through old hash table and transfer values to new table
   for(int i = 0; i < h->size; i++){
     if (h->table[i] != NULL){
-      count++;
       LinkedList *new = malloc(sizeof *new);
       new->positive = h->table[i]->positive;
       new->zero = h->table[i]->zero;
-      add_to_table(h, h->table[i]->string, new);
+      add_to_table(new_table, h->table[i]->string, new);
     }
   }
-  printf("%s\n", "actually transferred this many: ");
-  printf("%d\n", count);
   return new_table;
 }
 
