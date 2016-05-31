@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "classifier.h"
 #include "hash_tables.h"
 #include "read.h"
@@ -26,15 +27,27 @@ void get_grams(char* sentences, char* grams[]){
 	}
 }
 
+bool not_stop_word(char* word, Classifier* clf){
+	for (int i = 0; i < 173; i++){
+		if(strcmp(clf->stop->words[i], word) == 0){
+			return false;
+		}
+	}
+	return true;
+}
+
+
 void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
 	get_grams(quote, grams);
 	for (int i = 0; i < l; i++){
 		if (grams[i] != NULL){
 			// add stop words logic here
-			HashTable *n = add_string(clf->dictionary, grams[i], class);
-			clf->dictionary = n;
-			clf->all_unigrams++;
-			if (class == 1){clf->positive_unigrams++;}
+			if (not_stop_word(grams[i], clf) == true){
+				HashTable *n = add_string(clf->dictionary, grams[i], class);
+				clf->dictionary = n;
+				clf->all_unigrams++;
+				if (class == 1){clf->positive_unigrams++;}
+			}
 		}
 	}
 }
