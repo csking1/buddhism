@@ -8,7 +8,7 @@ TrainSet* get_train_set(int range){
    FILE *fp;
    char line[300]; /* 300 is an arbitrary length to read in lines from the text file*/
    int count = 0;
-   fp = fopen("Data/training.txt", "r");
+   fp = fopen("Data/extra_mini.txt", "r");
 
    if(fp == NULL){
       perror("Error opening file");

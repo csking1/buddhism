@@ -12,7 +12,7 @@ OBJS = finding_buddhism.o \
 		stopwords.o
 DEPS = $(OBJS:.o=.d)
 CC = clang
-CFLAGS = -std=c99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
+CFLAGS = -std=gnu99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
 LDLIBS = -lpthread
 BIN = buddhism
 

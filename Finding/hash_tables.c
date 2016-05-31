@@ -35,24 +35,29 @@ unsigned int hash(HashTable *h, char *str){
 LinkedList *lookup_string(HashTable *h, char *str){
   LinkedList *list;
   unsigned int hashval = hash(h, str);
+
   for (int i = hashval; i < h->size; i++){
     list = h->table[i];
+    if (list == NULL){
+      return NULL;
+    }
     if (list != NULL){
       if (strcmp(str, list->string) == 0){
         return list;
       }
     }
   }
-
   for (int i = 0; i < hashval; i++){
     list = h->table[i];
+    if (list == NULL){
+      return NULL;
+    }
     if (list != NULL){
       if (strcmp(str, list->string) == 0){
         return list;
       }
     }
   }
-
   return NULL;
 }
 
@@ -62,10 +67,12 @@ bool is_too_full(HashTable *h){
 
 void add_to_table(HashTable *h, char* str, LinkedList* new){
   unsigned int hashval = hash(h, str);
+  LinkedList *list;
 
   // walk through the table and check for the first free spot, start at hash val and go to the top
-  for (int i = hashval; i<h->size; i++){
-    if (h->table[i] == NULL){
+  for (int i = hashval; i<h->size; i++){\
+    list = h->table[i];
+    if (list == NULL){
         new->next = h->table[i];
         h->table[i] = new;
         new->string = strdup(str);
@@ -74,7 +81,8 @@ void add_to_table(HashTable *h, char* str, LinkedList* new){
   }
   // start at the bottom of the table, check for the first free spot up to hash val, then return
   for (int i = 0; i < hashval; i++){
-    if (h->table[i] == NULL){
+    list = h->table[i];
+    if (list == NULL){
         new->next = h->table[i];
         h->table[i] = new;
         new->string = strdup(str);
@@ -98,7 +106,6 @@ HashTable* rehash(HashTable *h){
       LinkedList *new = malloc(sizeof *new);
       new->positive = h->table[i]->positive;
       new->zero = h->table[i]->zero;
-      printf("%s\n", h->table[i]->string);
       add_to_table(h, h->table[i]->string, new);
     }
   }
@@ -135,8 +142,8 @@ HashTable* add_string(HashTable *h, char *str, int class){
   if(counting(h, current, new, class) == true){
     return h;
   }
-  h->grams_count ++;
   add_to_table(h, str, new);
+  h->grams_count ++;
   if(is_too_full(h) == true){
     HashTable *t = rehash(h);
     return t;
