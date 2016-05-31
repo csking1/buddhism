@@ -30,6 +30,7 @@ void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
 	get_grams(quote, grams);
 	for (int i = 0; i < l; i++){
 		if (grams[i] != NULL){
+			// add stop words logic here
 			HashTable *n = add_string(clf->dictionary, grams[i], class);
 			clf->dictionary = n;
 			clf->all_unigrams++;
@@ -53,10 +54,11 @@ void walk_through_train(Classifier* clf, int range){
 	}
 }
 
-Classifier* classifier_init(TrainSet* t, HashTable* h){
+Classifier* classifier_init(TrainSet* t, HashTable* h, StopWords* s){
 	Classifier *clf = malloc(sizeof *clf);
 	clf->dictionary = h;
 	clf->train = t;
+	clf->stop = s;
 	clf->class_prob = class_probability(clf);
 	clf->all_unigrams = 0;
 	clf->positive_unigrams = 0;

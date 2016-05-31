@@ -98,7 +98,7 @@ HashTable* rehash(HashTable *h){
       LinkedList *new = malloc(sizeof *new);
       new->positive = h->table[i]->positive;
       new->zero = h->table[i]->zero;
-      printf("%s\n", h->table[i]->string);
+      // printf("%s\n", h->table[i]->string);
       add_to_table(h, h->table[i]->string, new);
     }
   }

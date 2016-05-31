@@ -3,14 +3,16 @@
 #include "hash_tables.h"
 #include "read.h"
 #include "classifier.h"
+#include "stopwords.h"
 
 // add in removal of stopwords
 
 int main(){
 	int range = 152; // size of the training set
-	TrainSet* set = get_train_set();
+	TrainSet* train = get_train_set();
 	HashTable* table = create_hash_table(range);
-	Classifier* clf = classifier_init(set, table);
+	StopWords* stop = get_stopwords();
+	Classifier* clf = classifier_init(train, table, stop);
 	walk_through_train(clf, range);
 	calculate_probabilities(clf);
 
@@ -18,7 +20,7 @@ int main(){
 	for (int i = 0; i < range; i++){
 		if (test->sentences[i] != NULL){
 			float score = get_score(clf, test->sentences[i]);
-			printf("%f\n", score);
+			// printf("%f\n", score);
 		}
 	}
 	for (int i = 0; i<16; i++){
