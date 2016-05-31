@@ -7,7 +7,7 @@
 // add in removal of stopwords
 
 int main(){
-	int range = 5; // size of the training set
+	int range = 152; // size of the training set
 	TrainSet* set = get_train_set();
 	HashTable* table = create_hash_table(range);
 	Classifier* clf = classifier_init(set, table);
