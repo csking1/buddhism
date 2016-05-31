@@ -8,7 +8,7 @@
 // add in removal of stopwords
 
 int main(){
-	int range = 152; // size of the training set
+	int range = 5; // size of the training set
 	TrainSet* train = get_train_set();
 	HashTable* table = create_hash_table(range);
 	StopWords* stop = get_stopwords();
