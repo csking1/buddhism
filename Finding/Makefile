@@ -8,10 +8,9 @@ endif
 OBJS = finding_buddhism.o \
 		hash_tables.o \
 		read.o \
-		classifier.o\
-		stopwords.o
+		classifier.o
 DEPS = $(OBJS:.o=.d)
-CC = gcc
+CC = clang
 CFLAGS = -std=gnu99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
 LDLIBS = -lpthread
 BIN = buddhism

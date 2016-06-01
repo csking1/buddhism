@@ -1,7 +1,3 @@
-# if there are no empty spaces, skip it
-# check for punctuation and remove
-# remove stopwords
-
 import sys
 # import nltk
 # nltk.download()

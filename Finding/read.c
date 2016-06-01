@@ -3,23 +3,24 @@
 #include <string.h>
 #include "read.h"
 
-TrainSet* get_train_set(int range){
-   TrainSet* t = malloc(sizeof *t);
+TrainSet* get_train_set(float range){
+   TrainSet* t = malloc(range * sizeof (*t));
    FILE *fp;
    char line[300]; /* 300 is an arbitrary length to read in lines from the text file*/
    int count = 0;
-   fp = fopen("Data/extra_mini.txt", "r");
-
+   fp = fopen("Data/main_training_set.txt", "r");
    if(fp == NULL){
       perror("Error opening file");
       return NULL;
    }
    while (fgets(line, 300, fp)){
       int s = strlen((line)) - 3;
-      char* quote = (char*)malloc(sizeof(char) * s);
-      for(int i = 0; i <= s; i++){
+      char* quote = (char*)malloc(sizeof(char) * (s+1));
+      
+      for(int i = 0; i < s; i++){
          quote[i] = line[i];
       }
+
       int label =  atoi(&line[s]);
       t->sentences[count] = quote;
       t->labels[count] = label;

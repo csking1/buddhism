@@ -5,7 +5,6 @@
 #include <string.h>
 #include "hash_tables.h"
 #include "read.h"
-#include "stopwords.h"
 
 typedef struct Classifier{
 	struct TrainSet* train;
@@ -18,7 +17,7 @@ typedef struct Classifier{
 	int positive_bigrams;
 } Classifier;
 
-Classifier* classifier_init(TrainSet* t, HashTable* h, StopWords* s);
+Classifier* classifier_init(TrainSet* t, HashTable* h);
 
 void get_grams(char* sentence, char* grams[]);
 

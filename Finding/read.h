@@ -4,10 +4,10 @@
 #include <stdlib.h>
 
 typedef struct TrainSet {
-	char* sentences[5];
-	int labels[5];
+	char* sentences[7892];
+	int labels[7892];
 } TrainSet;
 
-TrainSet* get_train_set();
+TrainSet* get_train_set(float range);
 
 #endif /* READ_H*/

@@ -27,26 +27,15 @@ void get_grams(char* sentences, char* grams[]){
 	}
 }
 
-bool not_stop_word(char* word, Classifier* clf){
-	for (int i = 0; i < 173; i++){
-		if(strcmp(clf->stop->words[i], word) == 0){
-			return false;
-		}
-	}
-	return true;
-}
-
 void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
 	get_grams(quote, grams);
 	for (int i = 0; i < l; i++){
 		if (grams[i] != NULL){
-			// add stop words logic here
-			if (not_stop_word(grams[i], clf) == true){
-				HashTable *n = add_string(clf->dictionary, grams[i], class);
-				clf->dictionary = n;
-				clf->all_unigrams++;
-				if (class == 1){clf->positive_unigrams++;}
-			}
+			HashTable *n = add_string(clf->dictionary, grams[i], class);
+			clf->dictionary = n;
+			clf->all_unigrams++;
+			if (class == 1){clf->positive_unigrams++;}
+			
 		}
 	}
 }
@@ -66,11 +55,10 @@ void walk_through_train(Classifier* clf, int range){
 	}
 }
 
-Classifier* classifier_init(TrainSet* t, HashTable* h, StopWords* s){
+Classifier* classifier_init(TrainSet* t, HashTable* h){
 	Classifier *clf = malloc(sizeof *clf);
 	clf->dictionary = h;
 	clf->train = t;
-	clf->stop = s;
 	clf->class_prob = class_probability(clf);
 	clf->all_unigrams = 0;
 	clf->positive_unigrams = 0;
@@ -98,6 +86,8 @@ void calculate_probabilities(Classifier* clf){
 	printf("%f\n", clf->dictionary->grams_count);
 	printf("%s\n", "Number of grams calculated probabilities for");
 	printf("%d\n", count);
+	printf("%s\n", "Size of dictionary is");
+	printf("%d\n", clf->all_unigrams);
 }
 
 float get_score(Classifier* clf, char* fragment){
