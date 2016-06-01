@@ -4,20 +4,22 @@
 #include "read.h"
 #include "classifier.h"
 
-// add in removal of stopwords
-
-// this whole function should take the size of the training set
-
 int main(){
-	TrainSet* set = get_train_set();
-	HashTable* table = create_hash_table(152.0); /*this breaks at any size around 200 or larger */
+	int range = 7892.0; // size of the training set
+	TrainSet* train = get_train_set(range);
 
-	Classifier* clf = classifier_init(set, table);
-
-	printf("%d\n", clf->all_unigrams);
-
+	HashTable* table = create_hash_table(range);
+	Classifier* clf = classifier_init(train, table);
+	walk_through_train(clf, range);
 	calculate_probabilities(clf);
 
+	TrainSet* test = get_train_set(range);
+	for (int i = 0; i < range; i++){
+		if (test->sentences[i] != NULL){
+			float score = get_score(clf, test->sentences[i]);
+			printf("%f\n", score);
+		}
+	}
 	for (int i = 0; i<16; i++){
 		// get a chunk from gutenberg
 		// create a classifier

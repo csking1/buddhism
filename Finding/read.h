@@ -4,12 +4,10 @@
 #include <stdlib.h>
 
 typedef struct TrainSet {
-	char* sentences[152]; /* 152 is the size of the training set*/
-	int labels[152];
+	char* sentences[7892];
+	int labels[7892];
 } TrainSet;
 
-TrainSet* get_train_set();
-
-void* print_quotes(TrainSet* t);
+TrainSet* get_train_set(float range);
 
 #endif /* READ_H*/

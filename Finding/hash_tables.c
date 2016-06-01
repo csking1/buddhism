@@ -5,22 +5,17 @@
 #include "hash_tables.h"
 
 float TOO_FULL_RATIO = 0.50;
-float GROWTH_RATIO = 5;
+float GROWTH_RATIO = 2;
 
-// Skeleton from http://www.sparknotes.com/cs/searching/hashtables/section3/, but most is original
+// The skeleton from sparknotes turned out to be buggy and not very useful, so most of this code is original.
+// Lesson: don't trust sparknotes. Sometimes what you find online is barely useful. 8 hours later.
+// I think I'm not capturing some of the functionality of linked lists
 
 HashTable* create_hash_table(float size){
   HashTable *h = malloc(sizeof *h);
-  if (size < 1){
-    return NULL;
-  }
-  // if ((h = malloc(sizeof h*)) == NULL){
-  //   return NULL;
-  // }
   if ((h->table = malloc(sizeof(h->table) * size)) == NULL){
     return NULL;
   }
-
   for (int i = 0; i < size; i++) {
     h->table[i] = NULL;
   }
@@ -32,20 +27,37 @@ HashTable* create_hash_table(float size){
 unsigned int hash(HashTable *h, char *str){
   unsigned int hashval = 0;
   for(; *str != '\0'; str++){
-   hashval = *str + (hashval << 5) - hashval;
- }
- float s = h-> size;
- int resolve = hashval & (int)s;
-  return resolve;
+    hashval = *str + (hashval << 5) - hashval;
+  }
+  return hashval %(int)h->size;
 }
 
 LinkedList *lookup_string(HashTable *h, char *str){
   LinkedList *list;
   unsigned int hashval = hash(h, str);
-  for (list = h->table[hashval]; list != NULL; list = list -> next){
-    if (strcmp(str, list->string) == 0) return list;
+
+  for (int i = hashval; i < h->size; i++){
+    list = h->table[i];
+    if (list == NULL){
+      return NULL;
+    }
+    if (list != NULL){
+      if (strcmp(str, list->string) == 0){
+        return list;
+      }
+    }
   }
-  // if there's no match, return NULL
+  for (int i = 0; i < hashval; i++){
+    list = h->table[i];
+    if (list == NULL){
+      return NULL;
+    }
+    if (list != NULL){
+      if (strcmp(str, list->string) == 0){
+        return list;
+      }
+    }
+  }
   return NULL;
 }
 
@@ -53,53 +65,58 @@ bool is_too_full(HashTable *h){
   return (h->grams_count / h->size) >= TOO_FULL_RATIO;
 }
 
-int transfer_values(HashTable *h, char *new_string, int positive_count, int zero_count){
-  LinkedList *new = malloc(sizeof *new);
-  // if ((new = malloc(sizeof new*)) == NULL){
-  //   return 1;
-  // }
-  unsigned int hashval = hash(h, new_string);
-  new->string = new_string;
-  new->next = h->table[hashval];
-  new->positive = positive_count;
+void add_to_table(HashTable *h, char* str, LinkedList* new){
+  unsigned int hashval = hash(h, str);
+  LinkedList *list;
 
-  new->zero = zero_count;
-
-  h->table[hashval] = new;
-
-  h->grams_count = h->grams_count + 1.0;
-
-  return 0;
+  // walk through the table and check for the first free spot, start at hash val and go to the top
+  for (int i = hashval; i<h->size; i++){
+    list = h->table[i];
+    if (list == NULL){
+        new->next = h->table[i];
+        h->table[i] = new;
+        new->string = strdup(str);
+        return;
+    }
+  }
+  // start at the bottom of the table, check for the first free spot up to hash val, then return
+  for (int i = 0; i < hashval; i++){
+    list = h->table[i];
+    if (list == NULL){
+        new->next = h->table[i];
+        h->table[i] = new;
+        new->string = strdup(str);
+        return;
+    }
+  }
 }
 
 HashTable* rehash(HashTable *h){
   float new_size = h->size * GROWTH_RATIO;
   HashTable* new_table = create_hash_table(new_size);
-  for(int i = 0; i<h->size; i++){
+  // walk through old hash table and transfer values to new table
+  for(int i = 0; i < h->size; i++){
     if (h->table[i] != NULL){
-      char* string = h->table[i]->string;
-      transfer_values(new_table, string, h->table[i]->positive, h->table[i]->zero);
+      LinkedList *new = malloc(sizeof *new);
+      new->positive = h->table[i]->positive;
+      new->zero = h->table[i]->zero;
+      add_to_table(new_table, h->table[i]->string, new);
     }
   }
   return new_table;
 }
 
-HashTable* add_string(HashTable *h, char *str, int class){
-  LinkedList *new = malloc(sizeof *new);
-  LinkedList *current;
-  unsigned int hashval = hash(h, str);
-  current = lookup_string(h, str);
+bool counting(HashTable *h, LinkedList *current, LinkedList *new, int class){
+  /* Returns true if the string is already in the table, increments counting either way */
   if (current != NULL) {
       if (class == 0){
-        new->zero ++;
+        current->zero ++;
       }
       else {
-        new->positive ++;
+        current->positive ++;
       }
-    return h;
+    return true;
   }
-  new->string = strdup(str);
-
   if (class == 0){
     new->zero = 1;
     new->positive = 0;
@@ -108,31 +125,22 @@ HashTable* add_string(HashTable *h, char *str, int class){
     new->positive = 1;
     new->positive = 0;
   }
-  new->next = h->table[hashval];
-  h->table[hashval] = new;
-  h->grams_count = h->grams_count + 1.0;
-
-  if(is_too_full(h) == true){
-    HashTable *new = rehash(h);
-    return new;
-  }
-  return h;
+  return false;
 }
 
-void free_table(HashTable *h){
-  LinkedList *list, *temp;
-  if (h == NULL) return;
-  for (int i = 0; i < h->size; i++){
-    list = h->table[i];
-    while(list != NULL){
-      temp = list;
-      list = list -> next;
-      free(temp->string);
-      free(temp);
-    }
+HashTable* add_string(HashTable *h, char *str, int class){
+  LinkedList *new = malloc(sizeof *new);
+  LinkedList *current = lookup_string(h, str);
+  if(counting(h, current, new, class) == true){
+    return h;
   }
-  free(h->table);
-  free(h);
+  add_to_table(h, str, new);
+  h->grams_count ++;
+  if(is_too_full(h) == true){
+    HashTable *t = rehash(h);
+    return t;
+  }
+  return h;
 }
 
 float get_gram_probability(HashTable *h, char* str){
@@ -149,4 +157,20 @@ float get_probability_gram_is_positive(HashTable *h, char *str){
       return 0.0;
     }
     return rt->probability_gram_is_positive;
+}
+
+void free_table(HashTable *h){
+  LinkedList *list, *temp;
+  if (h == NULL) return;
+  for (int i = 0; i < h->size; i++){
+    list = h->table[i];
+    while(list != NULL){
+      temp = list;
+      list = list -> next;
+      free(temp->string);
+      free(temp);
+    }
+  }
+  free(h->table);
+  free(h);
 }

@@ -9,6 +9,7 @@
 typedef struct Classifier{
 	struct TrainSet* train;
 	struct HashTable* dictionary;
+	struct StopWords* stop;
 	float class_prob;
 	int all_unigrams;
 	int all_bigrams;
@@ -21,5 +22,9 @@ Classifier* classifier_init(TrainSet* t, HashTable* h);
 void get_grams(char* sentence, char* grams[]);
 
 void calculate_probabilities(Classifier* clf);
+
+float get_score(Classifier* clf, char* fragment);
+
+void walk_through_train(Classifier *clf, int range);
 
 #endif /* CLASSIFIER_H_ */

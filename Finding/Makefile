@@ -11,8 +11,8 @@ OBJS = finding_buddhism.o \
 		classifier.o
 DEPS = $(OBJS:.o=.d)
 CC = clang
-CFLAGS = -std=c99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
-LDLIBS = -lpthread 
+CFLAGS = -std=gnu99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
+LDLIBS = -lpthread
 BIN = buddhism
 
 all: buddhism
