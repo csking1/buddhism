@@ -21,11 +21,11 @@ int main(){
 		}
 	}
 	for (int i = 0; i<16; i++){
-		// get a chunk from gutenberg
-		// create a classifier
-		// create a thread, that takes a gutenchunk and a classifier
-		// thread gives you back 10000/16 quotes with the highest score
-		// write out the highest scores to the csv
+		// make a list of text files, walk through it
+			// create a thread, that takes a gutenchunk and a classifier
+			// uses locks to access the classifier 
+			// thread gives you back quotes with the highest scores
+			// join the threads and write out to csv
 	}
 	return 0;
 }
