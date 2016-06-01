@@ -14,6 +14,7 @@ TrainSet* get_train_set(float range){
       return NULL;
    }
    while (fgets(line, 300, fp)){
+
       int s = strlen((line)) - 3;
       char* quote = (char*)malloc(sizeof(char) * (s+1));
       
@@ -21,6 +22,7 @@ TrainSet* get_train_set(float range){
          quote[i] = line[i];
       }
 
+      
       int label =  atoi(&line[s]);
       t->sentences[count] = quote;
       t->labels[count] = label;
