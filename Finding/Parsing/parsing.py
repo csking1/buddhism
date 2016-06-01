@@ -9,12 +9,11 @@ import string
 
 def read_files():
 
-	os.chdir("/home/csking1/buddhism/nyt")
+	os.chdir("/home/ec2-user/gutenberg_text")
 	for file in glob.glob("*.txt"):
-		for line in open(file):
-			print (line)
+		with open(file, "r") as f:
+			print (f.readline())
 		
-
 
 if __name__ == '__main__':		
 
