@@ -99,27 +99,29 @@ float get_score(Classifier* clf, char* fragment){
 	get_grams(fragment, grams);
 	int length = 0;
 	float score = 0.0;
+
+	// for every gram, get a score
 	for (int i = 0; i < l; i++){
-		float num = 1.0;
-		float denom = 1.0;
 		char* g = grams[i];
 
 		if (g != NULL){
+			float num = 1.0;
+			float denom = l;
 			length++;
 
 			float gp = get_gram_probability(clf->dictionary, g);
-
-			// this is probably over estimating
 			float pp = get_probability_gram_is_positive(clf->dictionary, g);
 
 			// numerator = 1 + prob_gram_positive * class_prob
 			float p = clf->class_prob;
-			num += pp * p;
+			num += (pp * p);
+
 			// denominator = 1 + gram_prob
 			denom += gp;
+			
 			score += num / denom;
 		}	
-
 	}
-	return score / length;
+
+return score / length;
 }

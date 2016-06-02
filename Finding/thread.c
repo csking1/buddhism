@@ -19,15 +19,12 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
    if ((t->table = malloc(sizeof(t->table) * size)) == NULL){
     return NULL;
   }
-   // initialize table with nulls
   for (int i = 0; i < size; i++) {
     t->table[i] = NULL;
   }
 
    while (fgets(line, 300, fp)){
       int s = strlen((line)) - 1;
-      printf("%s\n", line);
-
       char* quote = (char*)malloc(sizeof(char)*(s+1));
       LinkedTest* new = malloc(size * sizeof(*new));
 
@@ -35,12 +32,11 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
          quote[i] = line[i];
       }
       new->quote = quote;
-      // float c = get_score(t->clf, quote);
-      // new->score = c;
-      // printf("%f\n", c);
+      float c = get_score(t->clf, quote);
+      new->score = c;
+      printf("%f\n", c);
       t->table[count] = new;
       count ++;
-      printf("%d\n", count);
    }
 
    return t;

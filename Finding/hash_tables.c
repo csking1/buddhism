@@ -144,24 +144,18 @@ HashTable* add_string(HashTable *h, char *str, int class){
 
 float get_gram_probability(HashTable *h, char* str){
   LinkedList *rt = lookup_string(h, str);
-  // printf("%s\n", "got the string, get gram prob");
   if (rt == NULL){
     return 0.0;
   }
   return rt->gram_probability;
-  // return 0.5;
 }
 
-// this is returning values that are 
 float get_probability_gram_is_positive(HashTable *h, char *str){
     LinkedList *rt = lookup_string(h, str);
     if (rt == NULL){
       return 0.0;
     }
-    // float s = rt->probability_gram_is_positive;
-    // printf("%f\n", s);
     return rt->probability_gram_is_positive;
-    // return 0.25;
 }
 
 void free_table(HashTable *h){
