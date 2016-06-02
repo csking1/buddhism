@@ -13,10 +13,11 @@ typedef struct LinkedTest {
 typedef struct Thread {
 	LinkedTest** table;
 	Classifier *clf;
+	int size;
 } Thread;
 
 Thread* initialize_thread(char* path, Classifier *clf, int size);
 
-void write_quotes();
+void write_quotes(char* path, Thread* t);
 
 #endif /* READ_H*/
