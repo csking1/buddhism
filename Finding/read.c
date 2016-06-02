@@ -3,6 +3,10 @@
 #include <string.h>
 #include "read.h"
 
+
+// path to file on server is /home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_1.txt
+
+
 TrainSet* get_train_set(float range){
    TrainSet* t = malloc(range * sizeof (*t));
    FILE *fp;
