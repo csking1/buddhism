@@ -5,11 +5,16 @@
 #include "classifier.h"
 #include "hash_tables.h"
 
+typedef struct LinkedTest {
+	float score;
+	char* quote;
+} LinkedTest;
+
 typedef struct Thread {
-	LinkedList* sentences;
+	LinkedTest** table;
 	Classifier *clf;
 } Thread;
 
-Thread* initialize_thread(char* path, Classifier *clf);
+Thread* initialize_thread(char* path, Classifier *clf, int size);
 
 #endif /* READ_H*/
