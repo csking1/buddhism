@@ -18,7 +18,7 @@ float class_probability(Classifier* clf){
 }
 
 double get_grams(char* sentences, char* grams[]){
-	// Is given an empty char* grams, populates it with words from the sentence
+	// Is given an empty char* grams, populates it with words from the sentence and returns the number of words in the sentence
 	int count = 0;
 	char* words = strtok(sentences, " ");
 	while (words != NULL){
@@ -125,6 +125,5 @@ float get_score(Classifier* clf, char* fragment){
 			score += num / denom;
 		}	
 	}
-
-return score / length;
+	return score / length;
 }
