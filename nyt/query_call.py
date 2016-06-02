@@ -20,11 +20,14 @@ def main(filename):
 	on how "Buddhist" each quote is. 
 	Note: Chardet is used to circumvent text encoding ISO-8859-2
 	'''
-	with open (filename, 'rb') as f:
-		result = chardet.detect(f.read())
-	encoding = result['encoding']
+##Python3 code to detect encoding, doesn't work in python2
+# with open (filename, 'rb') as f: 
+	# 	result = chardet.detect(f.read())
+	# encoding = result['encoding']
+	# with open(filename, 'r', encoding = encoding) as csvfile:
 
-	with open(filename, 'r', encoding = encoding) as csvfile:
+
+	with open(filename, 'r') as csvfile:
 		reader = csv.reader(csvfile)
 		for line in reader:
 			quote = line[0]
@@ -74,23 +77,25 @@ def convert_dict_to_csv():
 
 	for key in QUART_DICT.keys():
 		key_string = str(key)
-		name = "articles/" + key_string + ".csv"
+		name = key_string + ".csv"
 
-		with open(name, 'w', newline="") as csvfile:
+		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
 			words = QUART_DICT[key]
 			w.writerow(words)
 
 	for key in DATES.keys():
 		key_string = str(key)
-		name = "articles/datesfor" + key_string + ".csv"
+		# name = "articles/datesfor" + key_string + ".csv"
+		name = "datesfor" + key_string + ".csv"
 
-		with open(name, 'w', newline="") as csvfile:
+		# with open(name, 'w', newline="") as csvfile: #python3 line
+		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
 			words = DATES[key]
 			w.writerow(words)
 
 if __name__ == '__main__':
-	filename = 'for_nyt.csv'
+	filename = 'new_csv.csv'
 	# key = '&api-key=01f2b56924bc493e87d25177ef24a697'
 main(filename)
