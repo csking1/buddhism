@@ -17,4 +17,6 @@ typedef struct Thread {
 
 Thread* initialize_thread(char* path, Classifier *clf, int size);
 
+void write_quotes();
+
 #endif /* READ_H*/

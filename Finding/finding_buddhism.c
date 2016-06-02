@@ -18,7 +18,7 @@ int main(){
 	char* path = "Data/file_1.txt";
 
 	Thread *t = initialize_thread(path, clf, size);
-
+	write_quotes();
 
 	// char* path = "/home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_{}.txt"
 	// path to file on server is /home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_1.txt

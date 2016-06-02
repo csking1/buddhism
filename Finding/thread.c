@@ -41,3 +41,7 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
 
    return t;
 }
+
+void write_quotes(Thread* t){
+
+}

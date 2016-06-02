@@ -19,7 +19,7 @@ typedef struct Classifier{
 
 Classifier* classifier_init(TrainSet* t, HashTable* h);
 
-void get_grams(char* sentence, char* grams[]);
+int get_grams(char* sentence, char* grams[]);
 
 void calculate_probabilities(Classifier* clf);
 

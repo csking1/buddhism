@@ -16,7 +16,7 @@ float class_probability(Classifier* clf){
 	return count/l;
 }
 
-void get_grams(char* sentences, char* grams[]){
+int get_grams(char* sentences, char* grams[]){
 	// Is given an empty char* grams, populates it with words from the sentence
 	int count = 0;
 	char* words = strtok(sentences, " ");
@@ -25,10 +25,11 @@ void get_grams(char* sentences, char* grams[]){
 		words = strtok(NULL, " ");
 		count ++;
 	}
+	return count;
 }
 
 void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
-	get_grams(quote, grams);
+	int r = get_grams(quote, grams);
 	for (int i = 0; i < l; i++){
 		if (grams[i] != NULL){
 			HashTable *n = add_string(clf->dictionary, grams[i], class);
@@ -96,7 +97,7 @@ float get_score(Classifier* clf, char* fragment){
 	for (int i = 0; i < l; i++){
 		 grams[i] = NULL;
 	}
-	get_grams(fragment, grams);
+	int set = get_grams(fragment, grams);
 	int length = 0;
 	float score = 0.0;
 
@@ -106,7 +107,7 @@ float get_score(Classifier* clf, char* fragment){
 
 		if (g != NULL){
 			float num = 1.0;
-			float denom = l;
+			float denom = set;
 			length++;
 
 			float gp = get_gram_probability(clf->dictionary, g);
@@ -116,7 +117,7 @@ float get_score(Classifier* clf, char* fragment){
 			float p = clf->class_prob;
 			num += (pp * p);
 
-			// denominator = 1 + gram_prob
+			// denominator = length of the input string + gram_prob
 			denom += gp;
 			
 			score += num / denom;
