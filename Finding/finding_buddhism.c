@@ -20,7 +20,7 @@ int main(){
 	char* path = "Data/file_1.txt";
 
 	Thread *t = initialize_thread(path, clf, size);
-	char* outpath = "Output/file_1_scores.txt";
+	char* outpath = "Output/file_1_scores_b.txt";
 	
 	write_quotes(outpath, t);
 

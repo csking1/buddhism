@@ -32,10 +32,14 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
          quote[i] = line[i];
       }
       new->quote = quote;
+      
+      // printf("%s\n", quote);
       float c = get_score(t->clf, quote);
       new->score = c;
       t->table[count] = new;
       count ++;
+
+      printf("%s\n", new->quote);
    }
    t->size = count;
    return t;
@@ -46,9 +50,8 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
 // For now just write out the first 10,000. Handle the sorting later
 void write_quotes(char* path, Thread* t){
    FILE *fp = fopen(path, "w");
-   int size = t->size;
 
-   for (int i = 0; i < 10000; i++){
+   for (int i = 5000; i < 15000; i++){
       LinkedTest* q = t->table[i];
       if (q != NULL){
          fputs(q->quote, fp);

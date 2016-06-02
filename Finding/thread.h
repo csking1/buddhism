@@ -8,6 +8,7 @@
 typedef struct LinkedTest {
 	float score;
 	char* quote;
+	struct LinkedList *next;
 } LinkedTest;
 
 typedef struct Thread {
