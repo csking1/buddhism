@@ -12,7 +12,7 @@ OBJS = finding_buddhism.o \
 DEPS = $(OBJS:.o=.d)
 CC = clang
 CFLAGS = -std=gnu99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
-LDLIBS = -lpthread
+LDLIBS = -lpthread -lm
 BIN = buddhism
 
 all: buddhism

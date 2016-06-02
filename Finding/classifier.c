@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 #include "classifier.h"
 #include "hash_tables.h"
 #include "train.h"
@@ -16,7 +17,7 @@ float class_probability(Classifier* clf){
 	return count/l;
 }
 
-int get_grams(char* sentences, char* grams[]){
+double get_grams(char* sentences, char* grams[]){
 	// Is given an empty char* grams, populates it with words from the sentence
 	int count = 0;
 	char* words = strtok(sentences, " ");
@@ -29,7 +30,7 @@ int get_grams(char* sentences, char* grams[]){
 }
 
 void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
-	int r = get_grams(quote, grams);
+	double r = get_grams(quote, grams);
 	for (int i = 0; i < l; i++){
 		if (grams[i] != NULL){
 			HashTable *n = add_string(clf->dictionary, grams[i], class);
@@ -97,7 +98,7 @@ float get_score(Classifier* clf, char* fragment){
 	for (int i = 0; i < l; i++){
 		 grams[i] = NULL;
 	}
-	int set = get_grams(fragment, grams);
+	double set = get_grams(fragment, grams);
 	int length = 0;
 	float score = 0.0;
 
@@ -107,6 +108,7 @@ float get_score(Classifier* clf, char* fragment){
 
 		if (g != NULL){
 			float num = 1.0;
+			// double denom = log(set);
 			float denom = set;
 			length++;
 
