@@ -93,10 +93,12 @@ void calculate_probabilities(Classifier* clf){
 float get_score(Classifier* clf, char* fragment){
 	int l = strlen(fragment);
 	char* grams[l];
+	for (int i = 0; i < l; i++){
+		 grams[i] = NULL;
+	}
 	get_grams(fragment, grams);
 	int length = 0;
 	float score = 0.0;
-
 	for (int i = 0; i < l; i++){
 		float num = 1.0;
 		float denom = 1.0;
@@ -104,17 +106,20 @@ float get_score(Classifier* clf, char* fragment){
 
 		if (g != NULL){
 			length++;
+
 			float gp = get_gram_probability(clf->dictionary, g);
+
+			// this is probably over estimating
 			float pp = get_probability_gram_is_positive(clf->dictionary, g);
 
 			// numerator = 1 + prob_gram_positive * class_prob
-			num += pp * clf->class_prob;
-
+			float p = clf->class_prob;
+			num += pp * p;
 			// denominator = 1 + gram_prob
 			denom += gp;
 			score += num / denom;
-		}
-		return score / length;
+		}	
+
 	}
-	return 0.0;
+	return score / length;
 }

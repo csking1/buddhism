@@ -5,11 +5,8 @@
 #include "thread.h"
 
 
-// path to file on server is /home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_1.txt
-
-
 Thread* initialize_thread(char* path, Classifier *clf, int size){
-   Thread* t = malloc(sizeof (*t));
+   Thread* t = malloc(sizeof(t) * size);
    t->clf = clf;
    FILE *fp = fopen(path, "r");
 
@@ -28,19 +25,22 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
   }
 
    while (fgets(line, 300, fp)){
+      int s = strlen((line)) - 1;
+      printf("%s\n", line);
 
-      int s = strlen((line)) - 2;
       char* quote = (char*)malloc(sizeof(char)*(s+1));
       LinkedTest* new = malloc(size * sizeof(*new));
 
       for(int i = 0; i < s; i++){
          quote[i] = line[i];
       }
-
       new->quote = quote;
-      new->score = get_score(t->clf, quote);
+      // float c = get_score(t->clf, quote);
+      // new->score = c;
+      // printf("%f\n", c);
       t->table[count] = new;
       count ++;
+      printf("%d\n", count);
    }
 
    return t;

@@ -15,14 +15,13 @@ int main(){
 	walk_through_train(clf, range);
 	calculate_probabilities(clf);
 
-	for (int i = 0; i<16; i++){
-		// char* path = "/home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_{}.txt"
-		char* path = "Data/file_1.txt";
+	char* path = "Data/file_1.txt";
 
-		Thread *t = initialize_thread(path, clf, size);
+	Thread *t = initialize_thread(path, clf, size);
 
+	// char* path = "/home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_{}.txt"
+	// path to file on server is /home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_1.txt
 
-	}
 	return 0;
 }
 
