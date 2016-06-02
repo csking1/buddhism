@@ -24,7 +24,6 @@ TrainSet* get_train_set(float range){
          quote[i] = line[i];
       }
 
-      
       int label =  atoi(&line[s]);
       t->sentences[count] = quote;
       t->labels[count] = label;
