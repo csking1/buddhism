@@ -4,11 +4,11 @@ else
   OPTIMIZE_FLAG = -O3
 endif
 
-
 OBJS = finding_buddhism.o \
 		hash_tables.o \
 		read.o \
-		classifier.o
+		classifier.o\
+		thread.o
 DEPS = $(OBJS:.o=.d)
 CC = clang
 CFLAGS = -std=gnu99 -Wall -MMD -MP -I. $(OPTIMIZE_FLAG)
