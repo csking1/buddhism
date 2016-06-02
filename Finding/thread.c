@@ -52,8 +52,8 @@ void write_quotes(char* path, Thread* t){
       LinkedTest* q = t->table[i];
       if (q != NULL){
          fputs(q->quote, fp);
-         printf(" ", fp);
-         fputs(q->score, fp)
+         fputs(" ", fp);
+         fprintf(fp, "%f", q->score);
          fputs("\n", fp);
       }
    }
