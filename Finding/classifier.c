@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "classifier.h"
 #include "hash_tables.h"
-#include "read.h"
+#include "train.h"
 
 float class_probability(Classifier* clf){
 	float count = 0;

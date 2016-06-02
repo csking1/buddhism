@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "read.h"
+#include "train.h"
 #include "thread.h"
 
 Thread* initialize_thread(char* path, Classifier *clf, int size){
@@ -24,22 +24,19 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
    }
 
    while (fgets(line, 300, fp)){
-      int s = strlen((line)) - 1;
-      char* quote = (char*)malloc(sizeof(char)*(s+1));
-      LinkedTest* new = malloc(size * sizeof(*new));
+      char* quote = strdup(line);
 
-      for(int i = 0; i < s; i++){
-         quote[i] = line[i];
-      }
+
+      LinkedTest* new = malloc(sizeof(*new));
       new->quote = quote;
       
-      // printf("%s\n", quote);
-      float c = get_score(t->clf, quote);
+      char* copy = strdup(quote);
+
+      float c = get_score(t->clf, copy);
       new->score = c;
       t->table[count] = new;
       count ++;
-
-      printf("%s\n", new->quote);
+      
    }
    t->size = count;
    return t;
@@ -57,7 +54,6 @@ void write_quotes(char* path, Thread* t){
          fputs(q->quote, fp);
          fputs(" ", fp);
          fprintf(fp, "%f", q->score);
-         fputs("\n", fp);
       }
    }
 }

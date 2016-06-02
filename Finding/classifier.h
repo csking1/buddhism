@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "hash_tables.h"
-#include "read.h"
+#include "train.h"
 
 typedef struct Classifier{
 	struct TrainSet* train;

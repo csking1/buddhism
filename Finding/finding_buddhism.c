@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "hash_tables.h"
-#include "read.h"
+#include "train.h"
 #include "classifier.h"
 #include "thread.h"
 
