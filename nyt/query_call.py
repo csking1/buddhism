@@ -13,6 +13,7 @@ key = '&api-key=01f2b56924bc493e87d25177ef24a697'
 QUART_DICT = {.25:[],.5:[],.75:[], 1:[]}
 DATES = {.25:[],.5:[],.75:[], 1:[]}
 NO_RETURN = 0
+OUTPUT_DIRECTORY = "/home/ec2-user/gutenberg_text/python_output/"
 
 def main(filename):
 	'''
@@ -78,7 +79,7 @@ def convert_dict_to_csv():
 
 	for key in QUART_DICT.keys():
 		key_string = str(key)
-		name = "/home/ec2-user/gutenberg_text/python_output" + key_string + ".csv"
+		name = OUTPUT_DIRECTORY + key_string + ".csv"
 
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
@@ -88,7 +89,7 @@ def convert_dict_to_csv():
 	for key in DATES.keys():
 		key_string = str(key)
 		# name = "articles/datesfor" + key_string + ".csv"
-		name = "/home/ec2-user/gutenberg_text/python_output/datesfor" + key_string + ".csv"
+		name = OUTPUT_DIRECTORY + "datesfor_" + key_string + ".csv"
 
 		# with open(name, 'w', newline="") as csvfile: #python3 line
 		with open(name, 'w') as csvfile:
