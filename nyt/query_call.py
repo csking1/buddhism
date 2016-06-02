@@ -74,10 +74,11 @@ def convert_dict_to_csv():
 	'''
 	Takes final dictionary and dumps each bucket key into a separate CSV filename
 	'''
+	# /home/ec2-user/gutenberg_text/python_output
 
 	for key in QUART_DICT.keys():
 		key_string = str(key)
-		name = key_string + ".csv"
+		name = "/home/ec2-user/gutenberg_text/python_output" + key_string + ".csv"
 
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
@@ -87,7 +88,7 @@ def convert_dict_to_csv():
 	for key in DATES.keys():
 		key_string = str(key)
 		# name = "articles/datesfor" + key_string + ".csv"
-		name = "datesfor" + key_string + ".csv"
+		name = "/home/ec2-user/gutenberg_text/python_output/datesfor" + key_string + ".csv"
 
 		# with open(name, 'w', newline="") as csvfile: #python3 line
 		with open(name, 'w') as csvfile:
