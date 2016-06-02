@@ -79,7 +79,7 @@ def convert_dict_to_csv():
 
 	for key in QUART_DICT.keys():
 		key_string = str(key)
-		name = OUTPUT_DIRECTORY + key_string + ".csv"
+		name = OUTPUT_DIRECTORY + "words/" + key_string + ".csv"
 
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
@@ -89,7 +89,7 @@ def convert_dict_to_csv():
 	for key in DATES.keys():
 		key_string = str(key)
 		# name = "articles/datesfor" + key_string + ".csv"
-		name = OUTPUT_DIRECTORY + "datesfor_" + key_string + ".csv"
+		name = OUTPUT_DIRECTORY + "dates/datesfor_" + key_string + ".csv"
 
 		# with open(name, 'w', newline="") as csvfile: #python3 line
 		with open(name, 'w') as csvfile:
