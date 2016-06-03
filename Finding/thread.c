@@ -27,26 +27,27 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
 
    while (fgets(line, 300, fp)){
       	if (count < size) {
-		printf("%d\n", count);
-		char* quote = strdup(line);
+   		    printf("%d\n", count);
+	        	  char* quote = strdup(line);
 
-		LinkedTest* new = malloc(sizeof(*new));
-      		new->quote = quote;
+         		LinkedTest* new = malloc(sizeof(*new));
+      		 new->quote = quote;
       
-      		char* copy = strdup(quote);
+      		 char* copy = strdup(quote);
 
       		float c = get_score(t->clf, copy);
-     		new->score = c;
-      		t->table[count] = new;
+     		     new->score = c;
+      		 t->table[count] = new;
       		count ++;
       		}
-	else {
-		t->size = count;
-		return t;   
-		}
-		}
-	}
+	     else {
+		       t->size = count;
+		       return t;   
+		    }
+	  }
+   return t;
 
+}
 
 
 // write out the 5,000 top and 5,000 lowest quotes to a csv to hand off to NYTimes
