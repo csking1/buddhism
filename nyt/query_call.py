@@ -9,7 +9,8 @@ import csv
 import chardet
 import re
 
-key = '&api-key=01f2b56924bc493e87d25177ef24a697'
+# key = "01f2b56924bc493e87d25177ef24a697"
+key = '&api-key=7e90712233444f859a2b6bfe175ed4c1'
 QUART_DICT = {.25:[],.5:[],.75:[], 1:[]}
 DATES = {.25:[],.5:[],.75:[], 1:[]}
 NO_RETURN = 0
@@ -29,8 +30,16 @@ def main(filename):
 				length = len(prob[0])
 				threshold = float(prob[0])
 				quote = line[length + 2:]
+				print (quote)
 				bucket = get_bucket(threshold)
-				get_keywords(quote, bucket)
+				while counter <= 100:
+					try:
+						get_keywords(quote, bucket)
+						counter = 0
+					except:
+						counter += 
+						
+
 	convert_dict_to_csv()
 
 def get_bucket(threshold):
@@ -58,8 +67,10 @@ def get_keywords(quote, bucket):
 		print ("No returned results")
 	else:
 		for each in dates:
-			DATES[bucket].append(each[:4])
+			if each:
+				DATES[bucket].append(each[:4])
 		for word in keywords_list:
+			print word
 			regex = re.compile('\(.+?\)')
 			word = regex.sub('', word)
 			word = str(word)
@@ -72,8 +83,8 @@ def convert_dict_to_csv():
 
 	for key in QUART_DICT.keys():
 		key_string = str(key)
-		name = OUTPUT_DIRECTORY + "words/" + key_string + ".csv"
-		# name = "articles/" + key_string + ".csv"
+		# name = OUTPUT_DIRECTORY + "words/" + key_string + ".csv"
+		name = "articles/" + key_string + ".csv"
 
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
@@ -82,8 +93,8 @@ def convert_dict_to_csv():
 
 	for key in DATES.keys():
 		key_string = str(key)
-		# name = "articles/datesfor" + key_string + ".csv"
-		name = OUTPUT_DIRECTORY + "dates/datesfor_" + key_string + ".csv"
+		name = "articles/datesfor" + key_string + ".csv"
+		# name = OUTPUT_DIRECTORY + "dates/datesfor_" + key_string + ".csv"
 
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
@@ -91,7 +102,9 @@ def convert_dict_to_csv():
 			w.writerow(words)
 
 if __name__ == '__main__':
-	filename="training.txt"
+	# filename = 'training.txt'
+	filename= '/home/csking1/buddhism/Finding/Output/file_14_b.txt'
+
 	# filename = 'new_csv.csv'
 	# key = '&api-key=01f2b56924bc493e87d25177ef24a697'
 main(filename)
