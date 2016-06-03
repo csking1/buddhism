@@ -6,6 +6,8 @@ from nltk.corpus import stopwords
 
 def clean_word(letter, filename):
 	letter = letter.lower()
+
+	# process files that are not associated with Trump
 	if "trump" not in filename:
 		for each in ["(", ".", ',', ")", "'"]:
 			if each in letter:
@@ -29,6 +31,8 @@ def process(filename, label):
 	'''
 	stop = stopwords.words('english')
 	stop.append(None)
+
+	# read in each file, clean the word, if it's not in stop words then add it to the outgoing list
 	with open(filename, "r") as f:
 		for l in f.readlines():
 			out = []

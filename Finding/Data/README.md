@@ -10,8 +10,8 @@ Most of the files in this directory are text files that we're using to create ou
 python reader.py Buddhist_to_text/one.txt 1 | tee Buddhist_to_text/Ready/one.txt
 ```
 
-2. This walks through each line for each file in the Ready Directory, removes stop words and any punctuation, and sends each sentence to the main testing file. 
+2. This walks through each line for each file in the Ready Directory, removes stop words and any punctuation, and sends each sentence to the main testing file.
 
 ```
-python clean_and_send_to_main_test.py Ready/one.txt 1 | tee main_training.txt 
+python clean_and_send_to_main_test.py Ready/one.txt 1 | tee main_training.txt
 ```
