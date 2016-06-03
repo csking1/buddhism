@@ -7,6 +7,9 @@
 
 char* path = "/home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_1.txt";
 
+
+// char* path = "Data/file_1.txt";
+
 int main(){
 	int range = 7892.0; // size of the training set
 	int size = 121555; // relative size of testing files
@@ -20,7 +23,7 @@ int main(){
 	//char* path = "Data/file_1.txt";
 
 	Thread *t = initialize_thread(path, clf, size);
-	char* outpath = "Output/file_1_scores_b.txt";
+	char* outpath = "Output/file_1_b.txt";
 	
 	write_quotes(outpath, t);
 

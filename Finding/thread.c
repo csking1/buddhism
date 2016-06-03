@@ -10,15 +10,14 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
    Thread* t = malloc(sizeof(t) * size);
    t->clf = clf;
    FILE *fp = fopen(path, "r");
-   printf("%d\n", size);
-
    char line[300]; /* 300 is an arbitrary length to read in lines from the text file*/
    int count = 0;
    if(fp == NULL){
       perror("Error opening file");
       return NULL;
    }
-   if ((t->table = malloc(sizeof(t->table) * size*size)) == NULL){
+
+   if ((t->table = malloc(sizeof(t->table) * size)) == NULL){
     return NULL;
    }
    for (int i = 0; i < size; i++) {
@@ -26,8 +25,8 @@ Thread* initialize_thread(char* path, Classifier *clf, int size){
    }
 
    while (fgets(line, 300, fp)){
+
       	if (count < size) {
-   		    printf("%d\n", count);
 	        	  char* quote = strdup(line);
 
          		LinkedTest* new = malloc(sizeof(*new));
