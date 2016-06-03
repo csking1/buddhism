@@ -3,7 +3,7 @@ import csv
 import requests
 import json
 import re
-# KEY = 'api-key=01f2b56924bc493e87d25177ef24a697'
+
 
 url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?'
 
@@ -34,8 +34,10 @@ def go(key, query):
             keywords = each["keywords"]
             for each in keywords:
                 keywords_list.append(each["value"])
+       
     except:
         print("Connection Failed")
+
     return keywords_list, dates
 
     ##################Below code for storing results of query into CSVs##########
