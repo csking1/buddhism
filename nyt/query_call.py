@@ -9,11 +9,13 @@ import csv
 import chardet
 import re
 
-# key = "01f2b56924bc493e87d25177ef24a697"
-key = '&api-key=7e90712233444f859a2b6bfe175ed4c1'
+keys = ['&api-key=7e90712233444f859a2b6bfe175ed4c1', '&api-key=73eb5b6e18484c01b90f712564f13311', '&api-key=c75392ba82834401bc730b8a73388558']
+# keys = ['&api-key=7e90712233444f859a2b6bfe175ed4c1', '&api-key=73eb5b6e18484c01b90f712564f13311', '&api-key=01f2b56924bc493e87d25177ef24a697', \
+# '&api-key=c75392ba82834401bc730b8a73388558', '&api-key=1caf159dde144de7bbfad988442cfde2', '&api-key= b0d2f18b978e4702b4e89c961377e8aa', \
+# '&api-key=d3925c4aa92c4946a1d5a2c3ea086e56', '&api-key=d68f5459a87f4434979f2154c1907cae']
+
 QUART_DICT = {.25:[],.5:[],.75:[], 1:[]}
 DATES = {.25:[],.5:[],.75:[], 1:[]}
-NO_RETURN = 0
 OUTPUT_DIRECTORY = "/home/ec2-user/gutenberg_text/python_output/"
 
 def main(filename):
@@ -22,7 +24,7 @@ def main(filename):
 	on how "Buddhist" each quote is. 
 	Note: Chardet is used to circumvent text encoding ISO-8859-2
 	'''
-		
+	COUNTER = 0
 	with open(filename, 'r') as f:
 		for line in f.readlines():
 			prob = re.findall("\d+\.\d+", line)
@@ -30,16 +32,22 @@ def main(filename):
 				length = len(prob[0])
 				threshold = float(prob[0])
 				quote = line[length + 2:]
-				print (quote)
 				bucket = get_bucket(threshold)
-				while counter <= 100:
-					try:
-						get_keywords(quote, bucket)
-						counter = 0
-					except:
-						counter += 
-						
-
+				print (COUNTER)
+				if len(keys) != 0:
+					if COUNTER <= 300: 
+						key = keys[0]
+						try:
+							words = get_keywords(key, quote, bucket)
+							if not words:
+								COUNTER += 1
+						except:
+							COUNTER += 1
+							if COUNTER >= 200:
+								keys.pop(0)
+					else: 
+						break		
+	print "broke out of loop"
 	convert_dict_to_csv()
 
 def get_bucket(threshold):
@@ -57,7 +65,7 @@ def get_bucket(threshold):
 		bucket = 1
 	return bucket
 
-def get_keywords(quote, bucket):
+def get_keywords(key, quote, bucket):
 	'''
 	Calls articles.go to get keywords from each query
 	Adds keywords to list in dictionary for each quartile of probability
@@ -65,6 +73,7 @@ def get_keywords(quote, bucket):
 	keywords_list, dates = go(key, quote)
 	if len(keywords_list) == 0:
 		print ("No returned results")
+		return False
 	else:
 		for each in dates:
 			if each:
@@ -75,6 +84,7 @@ def get_keywords(quote, bucket):
 			word = regex.sub('', word)
 			word = str(word)
 			QUART_DICT[bucket].append(word)
+			return True
 
 def convert_dict_to_csv():
 	'''
