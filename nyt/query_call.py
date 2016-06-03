@@ -21,20 +21,16 @@ def main(filename):
 	on how "Buddhist" each quote is. 
 	Note: Chardet is used to circumvent text encoding ISO-8859-2
 	'''
-##Python3 code to detect encoding, doesn't work in python2
-# with open (filename, 'rb') as f: 
-	# 	result = chardet.detect(f.read())
-	# encoding = result['encoding']
-	# with open(filename, 'r', encoding = encoding) as csvfile:
-
-
-	with open(filename, 'r') as csvfile:
-		reader = csv.reader(csvfile)
-		for line in reader:
-			quote = line[0]
-			threshold = float(line[1])
-			bucket = get_bucket(threshold)
-			get_keywords(quote, bucket)
+		
+	with open(filename, 'r') as f:
+		for line in f.readlines():
+			prob = re.findall("\d+\.\d+", line)
+			if len(prob) != 0:
+				length = len(prob[0])
+				threshold = float(prob[0])
+				quote = line[length + 2:]
+				bucket = get_bucket(threshold)
+				get_keywords(quote, bucket)
 	convert_dict_to_csv()
 
 def get_bucket(threshold):
@@ -57,7 +53,6 @@ def get_keywords(quote, bucket):
 	Calls articles.go to get keywords from each query
 	Adds keywords to list in dictionary for each quartile of probability
 	'''
-
 	keywords_list, dates = go(key, quote)
 	if len(keywords_list) == 0:
 		print ("No returned results")
@@ -65,7 +60,6 @@ def get_keywords(quote, bucket):
 		for each in dates:
 			DATES[bucket].append(each[:4])
 		for word in keywords_list:
-			# regex removes some NYT keyword anomalies like "Love (Emotion)"
 			regex = re.compile('\(.+?\)')
 			word = regex.sub('', word)
 			word = str(word)
@@ -75,11 +69,11 @@ def convert_dict_to_csv():
 	'''
 	Takes final dictionary and dumps each bucket key into a separate CSV filename
 	'''
-	# /home/ec2-user/gutenberg_text/python_output
 
 	for key in QUART_DICT.keys():
 		key_string = str(key)
 		name = OUTPUT_DIRECTORY + "words/" + key_string + ".csv"
+		# name = "articles/" + key_string + ".csv"
 
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
@@ -91,13 +85,13 @@ def convert_dict_to_csv():
 		# name = "articles/datesfor" + key_string + ".csv"
 		name = OUTPUT_DIRECTORY + "dates/datesfor_" + key_string + ".csv"
 
-		# with open(name, 'w', newline="") as csvfile: #python3 line
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
 			words = DATES[key]
 			w.writerow(words)
 
 if __name__ == '__main__':
-	filename = 'new_csv.csv'
+	filename="training.txt"
+	# filename = 'new_csv.csv'
 	# key = '&api-key=01f2b56924bc493e87d25177ef24a697'
 main(filename)
