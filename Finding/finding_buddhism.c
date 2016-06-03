@@ -31,9 +31,11 @@ int main(){
 	calculate_probabilities(clf);
 
 	for (int i = 1; i< 17; i++){
+		printf("%s\n", "Reading in another training set");
 		char* path = get_path(i, "/home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_");
 		Thread *t = initialize_thread(path, clf, size);
 		char* outpath = get_path(i, "Output/file_");
+		printf("%s\n", "Sending another result set to the printer")
 		write_quotes(outpath, t);
 	}
 return 0;
