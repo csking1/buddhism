@@ -93,8 +93,8 @@ def convert_dict_to_csv():
 
 	for key in QUART_DICT.keys():
 		key_string = str(key)
-		# name = OUTPUT_DIRECTORY + "words/" + key_string + ".csv"
-		name = "articles/" + key_string + ".csv"
+		name = OUTPUT_DIRECTORY + "words/" + key_string + ".csv"
+		# name = "articles/" + key_string + ".csv"
 
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
@@ -103,8 +103,8 @@ def convert_dict_to_csv():
 
 	for key in DATES.keys():
 		key_string = str(key)
-		name = "articles/datesfor" + key_string + ".csv"
-		# name = OUTPUT_DIRECTORY + "dates/datesfor_" + key_string + ".csv"
+		# name = "articles/datesfor" + key_string + ".csv"
+		name = OUTPUT_DIRECTORY + "dates/datesfor_" + key_string + ".csv"
 
 		with open(name, 'w') as csvfile:
 			w = csv.writer(csvfile)
@@ -112,9 +112,7 @@ def convert_dict_to_csv():
 			w.writerow(words)
 
 if __name__ == '__main__':
-	# filename = 'training.txt'
-	filename= '/home/csking1/buddhism/Finding/Output/file_12_b.txt'
-
-	# filename = 'new_csv.csv'
-	# key = '&api-key=01f2b56924bc493e87d25177ef24a697'
+	
+	# filename= '/home/csking1/buddhism/Finding/Output/file_12_b.txt'
+	filename= '/home/ec2-user/buddhism/Finding/Output/file_10_b.txt'
 main(filename)
