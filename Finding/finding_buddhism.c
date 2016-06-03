@@ -1,13 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "hash_tables.h"
 #include "train.h"
 #include "classifier.h"
 #include "thread.h"
 
 
-char* path = "/home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_16.txt";
-
+char* get_path(int i, char* path){
+	char index[10];
+	sprintf(index, "%d", i);
+	char* rt[250];
+	strcpy(rt, path);
+	strcat(rt, index);
+	strcat(rt, ".txt");
+	return rt;
+}
 
 // char* path = "Data/file_1.txt";
 
@@ -22,13 +30,12 @@ int main(){
 	walk_through_train(clf, range);
 	calculate_probabilities(clf);
 
-	//char* path = "Data/file_1.txt";
-
-	Thread *t = initialize_thread(path, clf, size);
-	char* outpath = "Output/file_16_b.txt";
-	
-	write_quotes(outpath, t);
-
-	return 0;
+	for (int i = 1; i< 17; i++){
+		char* path = get_path(i, "/home/ec2-user/s3fs-fuse-1.78/gutenberg_text/GutenFiles/file_");
+		Thread *t = initialize_thread(path, clf, size);
+		char* outpath = get_path(i, "Output/file_");
+		write_quotes(outpath, t);
+	}
+return 0;
 }
 
