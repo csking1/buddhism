@@ -5947,6 +5947,9 @@
 0.058846, mr carmichael looked uneasily knew worst thing man could reason health begin think particular way particular subject
 0.090920, mr carmichael watched anxiously necessary ask questions must put quietly caution
 0.125010, goodhearted father large family put hand shoulder comfortingly
+<<<<<<< HEAD
+0.021744, winter wretched one days sara tramped snow went errands worse days snow melted combined mud form slush others fog thick lamps street lighted day london looked looked afternoon several years ago cab driven thoroughfares sara tucked seat leaning father's shoulder days windows house large family alway0.022225, s looked delightfully cozy alluring study indian gentleman sat glowed warmth rich color attic dismal beyond words longer sunsets sunrises look scarcely ever stars seemed sara clouds hung low skylight either gray
+=======
 0.021744, winter wretched one days sara tramped snow went errands worse days snow melted combined mud form slush others fog thick lamps street lighted day london looked looked afternoon several years ago cab driven thoroughfares sara tucked seat leaning father's shoulder days windows house large family alway0.022225, s looked delightfully cozy alluring study indian gentleman sat glowed warmth rich color attic dismal beyond words longer sunsets sunrises look scarcely ever stars seemed sara clouds hung low skylight either gray mudcolor dropping heavy rain four o'clock afternoon even special fog daylight end neces0.052645, sary go attic anything sara obliged light candle women kitchen depressed made illtempered ever becky driven like little slave
 0.031274, many opportunities making mind think something else many opportunities proving whether princess one strongest tests ever put came certain dreadful day often thought afterward would never quite fade memory even years come
 0.029417, little figure forlorn even herselfa little figure much bundle rags small bare red muddy feet peeped rags owner trying cover long enough rags appeared shock head tangled hair dirty face big hollow hungry eyes
@@ -7372,3 +7375,4 @@
 0.200020, "i shall never forget that"
 0.071439, "as soon comprehended made vow never eat destroy anything contained lifeand kept ever since
 0.125092, "we sat faced one another two yards apart
+>>>>>>> 6cfd1964c56fa9ba6ffbda6282612dc6a18eafc2
