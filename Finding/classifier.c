@@ -37,7 +37,7 @@ void add_grams(Classifier* clf, char* grams[], char* quote, int l, int class){
 			clf->dictionary = n;
 			clf->all_unigrams++;
 			if (class == 1){clf->positive_unigrams++;}
-			
+
 		}
 	}
 }
@@ -73,11 +73,13 @@ void calculate_probabilities(Classifier* clf){
 	for (int i = 0; i < range; i++){
 		if (clf->dictionary->table[i] != NULL){
 			count ++;
-			// P(unigram) :  0 count + 1 count / all_unigrams,
+
+			// P(unigram) :  (0 count + 1 count) / all_unigrams,
 			int sum = clf->dictionary->table[i]->zero;
 			sum += clf->dictionary->table[i]->positive;
 			float add_one = (float)sum / (float)clf->all_unigrams;
 			clf->dictionary->table[i]->gram_probability = add_one;
+
 			// // P(unigram|1) : positive count for this unigram / all positive unigrams,
 			int positive_count = clf->dictionary->table[i]-> positive;
 			float add_two = (float)positive_count / (float)clf->positive_unigrams;
@@ -108,7 +110,6 @@ float get_score(Classifier* clf, char* fragment){
 
 		if (g != NULL){
 			float num = 1.0;
-			// double denom = log(set);
 			float denom = set;
 			length++;
 
@@ -121,9 +122,9 @@ float get_score(Classifier* clf, char* fragment){
 
 			// denominator = length of the input string + gram_prob
 			denom += gp;
-			
+
 			score += num / denom;
-		}	
+		}
 	}
 	return score / length;
 }
