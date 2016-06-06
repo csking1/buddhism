@@ -5,7 +5,7 @@ from mrjob.job import MRJob
 import re
 import heapq
 
-K = 5
+K = 10
 WORD_RE = re.compile(r"[\w']+")
 
 class MR_top_kwords(MRJob):
